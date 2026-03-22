@@ -1,1 +1,7 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/ZH_JZPPv)
+### Kuba Kane
+# PHYS30762 Assignment 4 - Practising Overloading Special Functions/Operators in Classes
+
+
+## User Guidelines
+### Running the program as-is
+This code was run on VSC using a Windows 11 device. The compilation line used was tbc. The program can then be run by calling the file tbc.
