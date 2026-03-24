@@ -25,12 +25,10 @@ private:
     //Declare "four_momentum_ptr" as a unique pointer to a vector of doubles
 public:
     //Default constructor
-    FourMomentum()
-    {
-        //Initialise unique pointer, pointing to a vector of 4 doubles each allocated as "0.0" 
-        four_momentum_ptr = std::make_unique<vector<double>>(4, 0.0);
-    }
-    //BETTER TO USE NIEL'S WAY OF DOING THIS
+    FourMomentum() :
+        //Initialise unique pointer, pointing to a vector of 4 doubles each allocated as "0.0"
+        four_momentum_ptr{std::make_unique<vector<double>>(4, 0.0)} {}
+        //Uses intialiser list (in case of consts)
 
     //Paramterised constructor
     FourMomentum(const double energy_in, const double x_momentum_in, const double y_momentum_in, const double z_momentum_in)
