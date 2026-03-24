@@ -9,7 +9,7 @@ Created by Kuba Kane (ID: 11019699)
 Created on Sun 22 Mar 2026
 */
 
-//Include gaurd
+//Include guard
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
@@ -22,11 +22,27 @@ class Particle
 {
 private:
     string name{"unnamed"};
-    FourMomentum momentum{0, 0, 0, 0};
+    FourMomentum momentum;
+    //FourMomentum is an object whose only data member is a unique_ptr, which need not be specified
+    //as it is handled by the default constructor within FourMomentum class (which specifies the unique
+    //ptr to a vector of four "0.0")
 
 public:
     //Default constructor
+    Particle() = default;
+
     //Paramterised constructor
+    Particle(const string& name_in, const FourMomentum& four_momentum_in) :
+    //Since the objects are large here, they are passed by reference to avoid uncessary copying
+    //Use initialiser list wherever possible
+    {
+        momentum = four_momentum_in;
+
+        //Check particle name is valid
+        name = name_in;
+
+    } 
+    
     //Destructor
 };
 

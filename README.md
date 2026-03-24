@@ -18,3 +18,7 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
   - Option 2 is better as option 1 forces a deep copy to be made of the members of the FourMomentum class, and can tberefore lead to issues
   since there are 2 copies of the data, e.g. if x momentum is updated in FourMomentum class, it does not update the x momentum for the 
   corresponding particle class.
+
+### Passing by reference or by value
+ - Passed by reference in constructor of Particle class as it takes in FourMomentum object which need not be copied, while passed by value in 
+ constructor of FourMomentum class as it takes in doubles which are not expensive to copy.
