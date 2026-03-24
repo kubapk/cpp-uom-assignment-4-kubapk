@@ -22,11 +22,9 @@ using std::vector;
 class FourMomentum
 {
 private:
-    double energy{0}; //MeV (c=1)
-    double x_momentum{0}; //Momentum in x direction
-    double y_momentum{0}; //Momentum in y direction
-    double z_momentum{0}; //Momentum in z direction
-    
+    vector<FourMomentum>* 
+    //Four-momentum is as a pointer to a dynamically allocated vector
+    //For now we use a vector pointer and when we allocate it we declare it as dynamically allocated
 public:
     //Default constructor
     FourMomentum() = default;
