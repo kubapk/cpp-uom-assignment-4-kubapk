@@ -66,8 +66,18 @@ public:
     double get_py() const {return (*four_momentum_ptr)[2];}
     double get_pz() const {return (*four_momentum_ptr)[3];}
 
+    //Assignment operator
 
-    //Copy, move, assignment, etc. RULE OF 5
+    //Copy constructor
+    //Unique pointer does not allow copy
+
+    //Destructor
+
+    //Move constructor 
+
+    //Move assignment operator
+
+    //Member functions (overload operators)
 
 };
 

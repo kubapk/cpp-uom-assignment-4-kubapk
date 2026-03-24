@@ -32,9 +32,11 @@ public:
     Particle() = default;
 
     //Paramterised constructor
-    Particle(const string& name_in, const FourMomentum& four_momentum_in) :
+    Particle(const string& name_in, const FourMomentum& four_momentum_in)
     //Since the objects are large here, they are passed by reference to avoid uncessary copying
     //Use initialiser list wherever possible
+    //THIS DOES NOT WORK RIGHT NOW SINCE YOUR CLASS HAS NOT DEFINED INTIIALISER (COPY CONSTRUCTOR) OR
+    //ASSIGNER (ASSIGNMENT OPERATOR)
     {
         momentum = four_momentum_in;
 
@@ -44,6 +46,21 @@ public:
     } 
     
     //Destructor
+    ~Particle() {}
+
+    //Setters
+
+    //Getters
+
+    //Assignment operator
+
+    //Copy constructor
+
+    //Destructor
+
+    //Move constructor 
+
+    //Move assignment operator
 };
 
 
