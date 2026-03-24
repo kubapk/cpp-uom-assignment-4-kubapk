@@ -15,14 +15,14 @@ Created on Sun 22 Mar 2026
 
 #include<iostream>
 #include<string>
-#include"FourMomentum"
+#include "FourMomentum.h"
 using std::string;
 
 class Particle
 {
 private:
     string name{"unnamed"};
-    FourMomentum momentum{};
+    FourMomentum momentum{0, 0, 0, 0};
 
 public:
     //Default constructor
