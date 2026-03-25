@@ -20,5 +20,12 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
   corresponding particle class.
 
 ### Passing by reference or by value
- - Passed by reference in constructor of Particle class as it takes in FourMomentum object which need not be copied, while passed by value in 
- constructor of FourMomentum class as it takes in doubles which are not expensive to copy.
+ - Passed by reference in constructor of Particle class as it takes in FourMomentum object which need not be copied, while passed by value in constructor of FourMomentum class as it takes in doubles which are not expensive to copy.
+
+### Copy constructor
+ - Instead of manually copying the four vector elements of FourMomentum, can use vector copy constructor, to initialise a vector by copying a given vector. The copy constructor takes in a FourMomentum object which is to be copied. We first need to access its private member, "four_momentum_ptr" to get the unique pointer to this object's vector containing 4 doubles (E, px, py, pz). This can be dereferenced to get the actual vector to be copied, which can be passed into a new vector and copied with the vector copy constructor. This can be then made into a unique pointer, which the object in the copy constructor (the object which the copy should go to) can be initialised with. This achieves the copy without manually copying each element of the vector (which would require a size data member of the FourMomentum class).
+
+
+ ## References
+ [1] https://www.studyplan.dev/pro-cpp/copy-semantics#using-unique-pointers
+ [2] https://www.studyplan.dev/pro-cpp/move-semantics

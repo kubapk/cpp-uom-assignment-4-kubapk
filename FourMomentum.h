@@ -45,6 +45,16 @@ public:
     //Destructor
     ~FourMomentum() {}
 
+    //Declare copy constructors
+    FourMomentum(const FourMomentum&); //copy operation
+    FourMomentum(FourMomentum&&); //move operation 
+    //copy is const since copying should not change original copy
+    //move is not const since FourMomentum pointer passed in will be given new pointer 
+
+    //Declare assignment operators
+    FourMomentum& operator=(const FourMomentum&); //copy operation
+    FourMomentum& operator=(FourMomentum&&); //move operation
+
     //Setters
     void set_E(const double energy_in)
     {
@@ -63,17 +73,6 @@ public:
     double get_px() const {return (*four_momentum_ptr)[1];}
     double get_py() const {return (*four_momentum_ptr)[2];}
     double get_pz() const {return (*four_momentum_ptr)[3];}
-
-    //Assignment operator
-
-    //Copy constructor
-    //Unique pointer does not allow copy
-
-    //Destructor
-
-    //Move constructor 
-
-    //Move assignment operator
 
     //Member functions (overload operators)
 
