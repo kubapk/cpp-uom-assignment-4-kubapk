@@ -43,7 +43,7 @@ public:
     }
 
     //Destructor
-    ~FourMomentum() {}
+    ~FourMomentum() {std::cout<<"Calling FourMomentum destructor"<<std::endl;}
 
     //Declare copy constructors
     FourMomentum(const FourMomentum&); //copy operation
