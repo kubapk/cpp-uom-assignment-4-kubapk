@@ -3,8 +3,9 @@ ____________________________________________
 FOUR MOMENTUM IMPLEMENTATION
 (Part of PHYS30762 Assignment 4)
 ____________________________________________
-This implementation file defines member functions for the "FourMomentum" class, 
-as well as its constructor and assignment operator for copy and move operations.
+This implementation file defines member functions (including setters) for the 
+"FourMomentum" class, as well as its constructor and assignment operator for 
+copy and move operations.
 
 Created by Kuba Kane (ID: 11019699)
 Created on Tue 24 Mar 2026

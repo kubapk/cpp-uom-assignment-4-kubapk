@@ -32,6 +32,9 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
  ### Paramterised constructor 
  - Use initialiser list or assignment inside parameterised constructor? To be more memory efficient, it is better to use initialisers where possible, since using assignment means the objects are initialised using default constructor first, and then the rvalues are assigned ("copied") to them. This costs an extra unecessary step.
 
+ ### Constructors / assignment operators in Particle class
+ - Use default? If print message required, need to define them manually
+
 
  ## References
  [1] https://www.studyplan.dev/pro-cpp/copy-semantics#using-unique-pointers

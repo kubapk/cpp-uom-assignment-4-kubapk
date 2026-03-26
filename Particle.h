@@ -31,21 +31,21 @@ public:
     //Default constructor
     Particle() = default;
 
-    //Declare paramterised constructor
+    //Declare parameterised constructor
     Particle(const string& name_in, const FourMomentum& momentum_in);
     //Since the objects are large here, they are passed by reference to avoid unnecessary copying
     
     //Destructor
     ~Particle() {}
 
-    //Declare copy constructors
-    Particle(const Particle&); //copy operation
-    Particle(Particle&&); //move operation 
+    //Copy constructors
+    Particle(const Particle&) = default;
+    Particle(Particle&&) = default;
 
-    //Declare assignment operators
-    Particle& operator=(const Particle&); //copy operation
-    Particle& operator=(Particle&&); //move operation
-
+    //Assignment operators
+    Particle& operator=(const Particle&) = default;
+    Particle& operator=(Particle&&) = default
+    
     //Setters
     void set_name(const string name_in);
     void set_four_momentum(const FourMomentum momentum_in) {momentum = momentum_in;}
