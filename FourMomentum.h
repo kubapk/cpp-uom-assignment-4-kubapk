@@ -41,7 +41,7 @@ public:
     FourMomentum(const FourMomentum&); //copy operation
     FourMomentum(FourMomentum&&); //move operation 
     //copy is const since copying should not change original copy
-    //move is not const since FourMomentum pointer passed in will be given new pointer 
+    //move is not const since FourMomentum pointer passed in will be given new pointer (null)
 
     //Declare assignment operators
     FourMomentum& operator=(const FourMomentum&); //copy operation
@@ -61,9 +61,8 @@ public:
     double get_pz() const {return (*four_momentum_ptr)[3];}
 
     //Prototyping member functions (overload operators)
-    FourMomentum operator+(const FourMomentum& fm) const;
+    FourMomentum& operator+(const FourMomentum& fm) const;
     double dotProduct(const FourMomentum& fm) const;
-
 };
 
 
