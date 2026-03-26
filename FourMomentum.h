@@ -63,6 +63,9 @@ public:
     //Prototyping member functions (overload operators)
     FourMomentum operator+(const FourMomentum& fm) const;
     double dotProduct(const FourMomentum& fm) const;
+
+    //Prototyping friend functions
+    friend std::ostream& operator<<(std::ostream& os, const FourMomentum& fm);
 };
 
 

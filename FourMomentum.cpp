@@ -116,3 +116,13 @@ double FourMomentum::dotProduct(const FourMomentum& fm) const
     //Using metric tensor of special relativity
     return(-1*get_E()*fm.get_E() + get_px()*fm.get_px() + get_py()*fm.get_py() + get_pz()*fm.get_pz());
 }
+
+
+//FRIEND FUNCTIONS
+//Friend function to print FourMomentum
+std::ostream &operator<<(std::ostream &os, const FourMomentum &fm)
+{
+    os << "[E = "<<fm.get_E()<<"MeV, px = "<<fm.get_px()<<", py = "<<fm.get_py()<<", pz = "<<fm.get_pz()<<"]";
+
+    return os;
+}
