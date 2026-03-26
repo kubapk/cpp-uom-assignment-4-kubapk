@@ -15,6 +15,10 @@ Created on Wed 25 Mar 2026
 #include "FourMomentum.h"
 using std::vector;
 
+void print_text_middle(const string text, const int length)
+{
+    std::cout<<string(length, '=')<<text<<string(length, '=')<<std::endl;
+}
 
 int main()
 {
@@ -32,8 +36,49 @@ int main()
     particles.push_back(Particle("tau", FourMomentum(25, 2, 3, 1)));
     //PUSH BACK OR emplace_back
 
-    //Initialise a FourMomentum object using parameterised constructor
-    FourMomentum neutron{10, 1, 2, 3};
+    //Print out all vectors
+    for(size_t i{}; i<particles.size(); i++)
+    {
+        std::cout<<particles[i]<<"\n"<<std::endl;
+    }
+
+
+    std::cout<<"\nSum of the four momenta of the 2 electrons\n"<<string(60, '-')<<std::endl;
+    std::cout<<particles[0].get_four_momentum()+particles[1].get_four_momentum()<<std::endl;
+    std::cout<<string(60, '-')<<"\n"<<std::endl;
+
+
+    std::cout<<"\nDot product of first two muons\n"<<string(60, '-')<<std::endl;
+    std::cout<<particles[2].get_four_momentum().dotProduct(particles[3].get_four_momentum())<<std::endl;
+    std::cout<<string(60, '-')<<"\n"<<std::endl;
+
+
+    std::cout<<"\nAssignment operator of first electron to a new electron\n"<<string(60, '-')<<std::endl;
+    //Assignmnent requires the new electron to already exist
+    Particle new_electron("electron", FourMomentum()); //uses default FourMomentum
+    new_electron = particles[0];
+    std::cout<<"New electron is: \n" <<particles[0] <<std::endl;
+    std::cout<<string(60, '-')<<"\n"<<std::endl;
+
+
+    std::cout<<"\nCopy constructor of the first muon to a new muon\n"<<string(60, '-')<<std::endl;
+    //Copy constructor declares new muon on same line as copy
+    Particle new_muon = particles[2];
+    std::cout<<"New muon is: \n" <<particles[2] <<std::endl;
+    std::cout<<string(60, '-')<<"\n"<<std::endl;
+
+
+    std::cout<<"\nMove electron using move constructor\n"<<string(60, '-')<<std::endl;
+    //Copy constructor declares moved electron on same line as copy
+    Particle moved_electron = std::move(particles[0]);
+    std::cout<<string(60, '-')<<"\n"<<std::endl;
+
+
+    std::cout<<"\nMove muon using move assignment\n"<<string(60, '-')<<std::endl;
+    //Assignment declared moved muon first
+    Particle moved_muon("muon", FourMomentum());
+    moved_muon = std::move(particles[2]);
+    std::cout<<string(60, '-')<<"\n"<<std::endl;
 
     return 0;
 }

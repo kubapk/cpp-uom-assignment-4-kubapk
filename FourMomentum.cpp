@@ -122,7 +122,7 @@ double FourMomentum::dotProduct(const FourMomentum& fm) const
 //Friend function to print FourMomentum
 std::ostream &operator<<(std::ostream &os, const FourMomentum &fm)
 {
-    os << "[E = "<<fm.get_E()<<"MeV, px = "<<fm.get_px()<<", py = "<<fm.get_py()<<", pz = "<<fm.get_pz()<<"]";
+    os << "[E = "<<fm.get_E()<<"MeV, px = "<<fm.get_px()<<"MeV, py = "<<fm.get_py()<<"MeV, pz = "<<fm.get_pz()<<"Mev]";
 
     return os;
 }

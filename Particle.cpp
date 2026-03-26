@@ -34,5 +34,11 @@ void Particle::set_name(const string name_in)
 }
 
 
-//MEMBER FUNCTIONS
-//Print Particle data
+//FRIEND FUNCTIONS
+//Friend function to print Particle data
+std::ostream& operator<<(std::ostream& os, const Particle& p)
+{
+    os << "Particle: "<<p.name<<"\nFour momentum: "<<p.momentum;
+
+    return os;
+}
