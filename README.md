@@ -28,6 +28,9 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
 ### Operator overloading
  - Should these be implemented as member functions, friend functions, or non-member functions? To keep in line with encapsulation, since the operations dot product and sum only deal with FourMomentum objects (and their data members), they should not be non-member functions. As such, there is also no need to consider them as friend functions - all the data members they need are in the FourMomentum class.
 
+ ### Paramterised constructor 
+ - Use initialiser list or assignment inside parameterised constructor? To be more memory efficient, it is better to use initialisers where possible, since using assignment means the objects are initialised using default constructor first, and then the rvalues are assigned ("copied") to them. This costs an extra unecessary step.
+
 
  ## References
  [1] https://www.studyplan.dev/pro-cpp/copy-semantics#using-unique-pointers

@@ -14,6 +14,21 @@ Created on Tue 24 Mar 2026
 #include "FourMomentum.h"
 
 
+//CONSTRUCTORS
+//Parameterised constructor
+FourMomentum::FourMomentum(const double energy_in, const double x_momentum_in, const double y_momentum_in, 
+    const double z_momentum_in)
+{
+    //Check energy is not less than 0
+
+    four_momentum_ptr = std::make_unique<vector<double>>();
+    (*four_momentum_ptr).push_back(energy_in);
+    (*four_momentum_ptr).push_back(x_momentum_in);
+    (*four_momentum_ptr).push_back(y_momentum_in);
+    (*four_momentum_ptr).push_back(z_momentum_in);
+}
+
+
 //Copy constructor
 FourMomentum::FourMomentum(const FourMomentum& fm) : 
     //Unique pointer does not allow copy so need to extend  copy semantics to implement 
@@ -68,3 +83,34 @@ FourMomentum& FourMomentum::operator=(FourMomentum&& fm)
     return *this; //returns dereferenced four_momentum_ptr
 }
 
+
+//SETTERS
+//Setter for energy
+void FourMomentum::set_E(const double energy_in)
+{
+    //Check energy is not less than 0
+
+    (*four_momentum_ptr)[0] = energy_in;
+}
+
+
+//MEMBER FUNCTIONS
+//"+" operator overloading
+FourMomentum FourMomentum::operator+(const FourMomentum& fm) const
+{
+    //Use parameterised constructor, summing component in class to inputted component
+    return FourMomentum(
+    get_E() + fm.get_E(),
+    get_px() + fm.get_px(),
+    get_py() + fm.get_py(),
+    get_pz() + fm.get_pz()
+    );
+}
+
+
+//Dot product
+double FourMomentum::dotProduct(const FourMomentum& fm) const
+{
+    //Using metric tensor of special relativity
+    return(-1*get_E()*fm.get_E() + get_px()*fm.get_px() + get_py()*fm.get_py() + get_pz()*fm.get_pz());
+}
