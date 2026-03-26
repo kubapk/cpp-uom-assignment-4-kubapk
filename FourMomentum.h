@@ -75,6 +75,21 @@ public:
     double get_pz() const {return (*four_momentum_ptr)[3];}
 
     //Member functions (overload operators)
+    FourMomentum operator+(const FourMomentum& fm) const
+    {
+        //Use parameterised constructor, summing component in class to inputted component
+        return FourMomentum(
+        get_E() + fm.get_E(),
+        get_px() + fm.get_px(),
+        get_py() + fm.get_py(),
+        get_pz() + fm.get_pz()
+        );
+    }
+
+    double dotProduct(const FourMomentum& fm) const
+    {
+        return(get_E()*fm.get_E() + get_px()*fm.get_px() + get_py()*fm.get_py() + get_pz()*fm.get_pz());
+    }
 
 };
 
