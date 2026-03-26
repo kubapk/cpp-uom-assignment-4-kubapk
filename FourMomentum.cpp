@@ -97,17 +97,15 @@ void FourMomentum::set_E(const double energy_in)
 
 //MEMBER FUNCTIONS
 //"+" operator overloading
-FourMomentum& FourMomentum::operator+(const FourMomentum& fm) const
+FourMomentum FourMomentum::operator+(const FourMomentum& fm) const
 {
     //Use parameterised constructor, summing component in class to inputted component "fm"
-    FourMomentum temp{FourMomentum(
+    return FourMomentum(
     get_E() + fm.get_E(),
     get_px() + fm.get_px(),
     get_py() + fm.get_py(),
     get_pz() + fm.get_pz()
-    )};
-
-    return temp;
+    );
 }
 
 

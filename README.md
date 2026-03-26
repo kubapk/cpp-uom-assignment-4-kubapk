@@ -27,7 +27,7 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
 
 ### Operator overloading
  - Should these be implemented as member functions, friend functions, or non-member functions? To keep in line with encapsulation, since the operations dot product and sum only deal with FourMomentum objects (and their data members), they should not be non-member functions. As such, there is also no need to consider them as friend functions - all the data members they need are in the FourMomentum class.
- - Issue when simply returning FourMomentum initialised using parameterised constructor in the + operator in FourMomentum class. WHY? Instead created temp FourMomnentum object so that it was an lvalue with a fixed address.
+ - Issue with the + operator in FourMomentum class when I tried to have it return a pointer to a FourMomentum object, but inside the code it returned a FourMomentum object initiated inside the "+" operator function, which went out of scope and could not be pointed to. Resolved by enforcing the function to return FourMomentum object (not pointer), resulting in no need for initiation of object - it can be simply specified on return line.
 
  ### Paramterised constructor 
  - Use initialiser list or assignment inside parameterised constructor? To be more memory efficient, it is better to use initialisers where possible, since using assignment means the objects are initialised using default constructor first, and then the rvalues are assigned ("copied") to them. This costs an extra unecessary step.

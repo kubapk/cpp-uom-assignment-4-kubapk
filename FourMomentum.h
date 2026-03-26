@@ -61,7 +61,7 @@ public:
     double get_pz() const {return (*four_momentum_ptr)[3];}
 
     //Prototyping member functions (overload operators)
-    FourMomentum& operator+(const FourMomentum& fm) const;
+    FourMomentum operator+(const FourMomentum& fm) const;
     double dotProduct(const FourMomentum& fm) const;
 };
 
