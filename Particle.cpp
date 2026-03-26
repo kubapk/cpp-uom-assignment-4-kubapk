@@ -25,12 +25,6 @@ Particle::Particle(const string& name_in, const FourMomentum& momentum_in)
 }
 
 
-//Copy constructor
-//Move constructor
-
-//ASSIGNMENT OPERATORS
-
-
 //SETTERS
 //Setter for particle name
 void Particle::set_name(const string name_in)
@@ -38,3 +32,7 @@ void Particle::set_name(const string name_in)
     //Check name is valid
     name = name_in;
 }
+
+
+//MEMBER FUNCTIONS
+//Print Particle data

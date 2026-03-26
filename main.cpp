@@ -30,6 +30,7 @@ int main()
     particles.push_back(Particle("muon", FourMomentum(15, 0, 2, 1)));
     particles.push_back(Particle("tau", FourMomentum(10, 1, 2, 1)));
     particles.push_back(Particle("tau", FourMomentum(25, 2, 3, 1)));
+    //PUSH BACK OR emplace_back
 
     //Initialise a FourMomentum object using parameterised constructor
     FourMomentum neutron{10, 1, 2, 3};
