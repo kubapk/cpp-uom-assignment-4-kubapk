@@ -44,8 +44,8 @@ public:
 
     //Assignment operators
     Particle& operator=(const Particle&) = default;
-    Particle& operator=(Particle&&) = default
-    
+    Particle& operator=(Particle&&) = default;
+
     //Setters
     void set_name(const string name_in);
     void set_four_momentum(const FourMomentum momentum_in) {momentum = momentum_in;}
