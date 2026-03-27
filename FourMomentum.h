@@ -35,8 +35,8 @@ public:
     FourMomentum(const double energy_in, const double x_momentum_in, const double y_momentum_in, 
         const double z_momentum_in);
 
-    //Destructor
-    ~FourMomentum() {std::cout<<" >> Calling FourMomentum destructor"<<std::endl;}
+    //Declare destructor
+    ~FourMomentum();
 
     //Declare copy constructors
     FourMomentum(const FourMomentum&); //copy operation

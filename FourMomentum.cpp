@@ -38,6 +38,11 @@ FourMomentum::FourMomentum(const double energy_in, const double x_momentum_in, c
 }
 
 
+//Destructor
+FourMomentum::~FourMomentum() 
+{std::cout<<" >> Calling FourMomentum destructor"<<std::endl;}
+
+
 //Copy constructor
 FourMomentum::FourMomentum(const FourMomentum& fm) : 
     //Unique pointer does not allow copy so need to extend  copy semantics to implement 

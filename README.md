@@ -1,10 +1,16 @@
 ### Kuba Kane
 # PHYS30762 Assignment 4 - Practising Overloading Special Functions/Operators in Classes
 
+> [!IMPORTANT]
+> ### Program summary
+> This program...
+
 
 ## User Guidelines
 ### Running the program as-is
 This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o main.exe -Wall`. The program can then be run by calling the file `main.exe`.
+
+You can check if the move semantics work by uncommenting the lines which print First muon and First electron (sections 5 and 6 in `\main.cpp`), and you will receive a compiler error, given that it cannot print out the Particle object given its pointer is null (handled by smart unique pointer).
 
 ### Modifying the main file, `main.cpp`
 These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own).
@@ -36,10 +42,12 @@ If you wish to make changes how four momenta works,...
 
 
 ## Physics Behind the Program
- - //
+//
+
+The program could be improved by taking advantage of the equation $m^2 = E^2 - p^2$. Since all 18 particles in the standard model have a defined mass, a `std::map` could contain each particle name as the key and its mass as the value. When in the main file a Particle is initialised with a given name, this could be mapped to find the corresponding mass. As a result, the FourMomentum constructors would only require the 3 momenta inputs, and could push back the energy to the four momentum vector using the aforementioned equation. This would make the program more accurate in terms of the physics, as otherwise the user could enter E and p which breaks the equation. Other possible improvements include checking that E>p!!!
 
 
-## Program Design / Reasoning
+## Program Design & Reasoning
 ### FourMomentum as a separate class
  - Having four momentum as a separate class makes more sense because it is a property of a particle with its own characteristics
  - A particle does not need the details of these characteristics, so particle need not be a class inherented from four momentum class
@@ -81,19 +89,34 @@ If you wish to make changes how four momenta works,...
  - Due to the requirement of pushing back the four-vector elements to the four momentum pointer in the parameterised constructor, it was not possible to use the energy setter within the parameterised constructor. This is because if the paramterised constructor is called before any other constructor, then the vector which `four_momentum_ptr` points to would be empty, while `set_E` requires the element to already exist (`(*four_momentum_ptr)[0]`). As a result, both the paramterised constructor and energy setter need to check the energy is not negative, hence the introduction of `validate_energy` private method in FourMomentum class (avoids repeating code for energy validation).
 
 
- ## References
- [1] https://www.studyplan.dev/pro-cpp/copy-semantics#using-unique-pointers
+## Disclosure of Delegation to Generative AI
+The author (Kuba Kane) declares the use of generative AI in the research and coding process. The following tasks were delegated to GAI tools under full human supervision:
 
- [2] https://www.studyplan.dev/pro-cpp/move-semantics
+- Idea generation
+- Code generation
+- Code optimisation
+- Code debugging
 
- [3] https://andreasfertig.com/blog/2023/04/push_back-vs-emplace_back-when-to-use-what/
+The GAI tool used for these tasks was: ChatGPT-5.2.
 
- [4] https://www.geeksforgeeks.org/cpp/unordered_set-in-cpp-stl/
+The author declares that the work does not contain any AI-generated code. GAI was used as a source of information for explaining code only, and as an inspiration to write original code.
 
- [5] https://www.geeksforgeeks.org/cpp/difference-between-stdset-vs-stdvector-in-c-stl/
+Responsibility for the final manuscript lies entirely with the author.
 
- [6] https://www.geeksforgeeks.org/cpp/static-member-function-in-cpp/
+GAI tools are not listed as authors and do not bear responsibility for the final outcomes.
 
 
- ## TO DO
- - Move all constructors & ops incl setters & getters to implementation file
+## References
+The following sources were used in the research for this assignment.
+
+[1] https://www.studyplan.dev/pro-cpp/copy-semantics#using-unique-pointers
+
+[2] https://www.studyplan.dev/pro-cpp/move-semantics
+
+[3] https://andreasfertig.com/blog/2023/04/push_back-vs-emplace_back-when-to-use-what/
+
+[4] https://www.geeksforgeeks.org/cpp/unordered_set-in-cpp-stl/
+
+[5] https://www.geeksforgeeks.org/cpp/difference-between-stdset-vs-stdvector-in-c-stl/
+
+[6] https://www.geeksforgeeks.org/cpp/static-member-function-in-cpp/
