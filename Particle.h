@@ -26,6 +26,8 @@ private:
     //FourMomentum is an object whose only data member is a unique_ptr, which need not be specified
     //as it is handled by the default constructor within FourMomentum class (which specifies the unique
     //ptr to a vector of four "0.0" doubles)
+    static bool valid_names(const string& name_in);
+    //private member function to check if name is valid
 
 public:
     //Default constructor

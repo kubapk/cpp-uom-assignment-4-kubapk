@@ -6,6 +6,33 @@
 ### Running the program as-is
 This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o main.exe`. The program can then be run by calling the file `main.exe`.
 
+### Modifying the main file, `main.cpp`
+These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own). HOW TO MODIFY MAIN TO CHANGE PARTICLE OR MAKE CHANGES TO HOW FOUR MOMENTUM WORKS
+
+If you wish to specify your own particle name, it must be in the list of valid names (containted within a private member function in the Particle class). These are case sensitive. The valid particles are:
+
+```
+electron
+muon
+tau
+electron neutrino
+muon neutrino
+tau neutrino
+up
+charm
+top
+down
+strange
+bottom
+photon 
+gluon
+positive W boson
+negative W boson
+Z boson
+Higgs bosson
+```
+
+
 
 ## Program Reasoning
 ### FourMomentum as a separate class
@@ -38,8 +65,14 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
 ### Constructors / assignment operators
  - The Particle class is set to use the default constructors and assignment operators for both copy and move operations, since the Particle class contains only string (`name`) and FourMomentum (`momentum`) objects. The string will use deep copy by default, and the FourMomentum object will use the constructors / assignment operators defined in the FourMomentum class.
 
-### Using implementation file
+### Using implementation files
  - All constructors (default, parameterised, copy, move), assignment operators (copy, move), and setters and getters have been specified in the implementation file unless they are trivial (fit in one line, with no sub-scopes).
+
+
+### Input validation
+ - Unlike assignment 3, it is not purposeful to use a validation file to check particles for their properties. Firstly, the energy and momentum of the particle is not a set value for a given particle, and there could many instances of the same particle with different energy or momenta. Secondly, there are omly 17+1 particles in the Standard Model, and so only 18 possible names that should be allowed for the particles. Implementing these in a validation file would allow the user to edit them more easily, and also potentially break the program if the format was changed.
+ - The valid particle names are therefore managed as a private static method in the Particle class, disallowing any setters or getters which could modify the list. This method checks if the inputted particle name is valid by comparing it to a valid particle name list. Static ensures that during run time the list inside the function cannot be modified.
+ - Use `std::unordered_set` to store the valid particles instead of `std::vector` as sets ensure the elements are unique, and unordered sets use average constant time O(1) for insert, search and delete operations (same as vectors).
 
 
  ## References
@@ -48,6 +81,10 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
  [2] https://www.studyplan.dev/pro-cpp/move-semantics
 
  [3] https://andreasfertig.com/blog/2023/04/push_back-vs-emplace_back-when-to-use-what/
+
+ [4] https://www.geeksforgeeks.org/cpp/unordered_set-in-cpp-stl/
+
+ [5] https://www.geeksforgeeks.org/cpp/difference-between-stdset-vs-stdvector-in-c-stl/
 
 
  ## TO DO

@@ -86,8 +86,8 @@ int main()
         //Move constructor declares moved electron on same line as copy
         std::cout<<"\nMove first electron to new electron using move constructor\n"<<string(60, '-')<<std::endl;
         Particle moved_electron = std::move(particles[0]);
-        std::cout<<"New electron: "<<moved_electron<<std::endl;
-        //Check if first electron moved: std::cout<<"First electron: "<<particles[0]<<std::endl;
+        std::cout<<"New electron: \n"<<moved_electron<<std::endl;
+        //Check if first electron moved: std::cout<<"First electron: \n"<<particles[0]<<std::endl;
         std::cout<<string(60, '-')<<"\n"<<std::endl;
 
 
@@ -100,8 +100,8 @@ int main()
 
         std::cout<<"Moving first muon to new muon"<<std::endl;
         moved_muon = std::move(particles[2]);
-        std::cout<<"New muon: "<<moved_muon<<std::endl;
-        //Check if first muon moved: std::cout<<"First muon: "<<particles[2]<<std::endl;
+        std::cout<<"New muon: \n"<<moved_muon<<std::endl;
+        //Check if first muon moved: std::cout<<"First muon: \n"<<particles[2]<<std::endl;
         std::cout<<string(60, '-')<<"\n"<<std::endl;
     }
     catch(const std::exception& e)
