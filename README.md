@@ -10,8 +10,6 @@
 ### Running the program as-is
 This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o main.exe -Wall`. The program can then be run by calling the file `main.exe`.
 
-You can check if the move semantics work by uncommenting the lines which print First muon and First electron (sections 5 and 6 in `\main.cpp`), and you will receive a compiler error, given that it cannot print out the Particle object given its pointer is null (handled by smart unique pointer).
-
 ### Modifying the main file, `main.cpp`
 These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own).
 
@@ -39,6 +37,8 @@ Higgs bosson
 ```
 
 If you wish to make changes how four momenta works,...
+
+You can check if the move semantics work by uncommenting the lines which print First muon and First electron (sections 5 and 6 in `main.cpp`), and you will receive a compiler error, given that it cannot print out the Particle object given its pointer is null (handled by smart unique pointer).
 
 
 ## Physics Behind the Program
