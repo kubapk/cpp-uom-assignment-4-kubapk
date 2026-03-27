@@ -4,12 +4,12 @@
 
 ## User Guidelines
 ### Running the program as-is
-This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o main.exe`. The program can then be run by calling the file `main.exe`.
+This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o main.exe -Wall`. The program can then be run by calling the file `main.exe`.
 
 ### Modifying the main file, `main.cpp`
-These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own). HOW TO MODIFY MAIN TO CHANGE PARTICLE OR MAKE CHANGES TO HOW FOUR MOMENTUM WORKS
+These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own).
 
-If you wish to specify your own particle name, it must be in the list of valid names (containted within a private member function in the Particle class). These are case sensitive. The valid particles are:
+If you wish to specify your own particle name, it must be in the list of valid names (containted within a private member function in the Particle class). The valid particles are given below. Note that these are case-sensitive and must be entered exactly as seen.
 
 ```
 electron
@@ -32,9 +32,14 @@ Z boson
 Higgs bosson
 ```
 
+If you wish to make changes how four momenta works,...
 
 
-## Program Reasoning
+## Physics Behind the Program
+ - //
+
+
+## Program Design / Reasoning
 ### FourMomentum as a separate class
  - Having four momentum as a separate class makes more sense because it is a property of a particle with its own characteristics
  - A particle does not need the details of these characteristics, so particle need not be a class inherented from four momentum class
@@ -70,9 +75,10 @@ Higgs bosson
 
 
 ### Input validation
- - Unlike assignment 3, it is not purposeful to use a validation file to check particles for their properties. Firstly, the energy and momentum of the particle is not a set value for a given particle, and there could many instances of the same particle with different energy or momenta. Secondly, there are omly 17+1 particles in the Standard Model, and so only 18 possible names that should be allowed for the particles. Implementing these in a validation file would allow the user to edit them more easily, and also potentially break the program if the format was changed.
+ - Unlike assignment 3, it is not purposeful to use a validation file to check particles for their properties. Firstly, the energy and momentum of the particle is not a set value for a given particle, and there could many instances of the same particle with different energy or momenta. Secondly, there are only 17+1 particles in the Standard Model, and so only 18 possible names that should be allowed for the particles. Implementing these in a validation file would allow the user to edit them more easily, and also potentially break the program if the format was changed.
  - The valid particle names are therefore managed as a private static method in the Particle class, disallowing any setters or getters which could modify the list. This method checks if the inputted particle name is valid by comparing it to a valid particle name list. Static ensures that during run time the list inside the function cannot be modified - belongs to the class rather than any specific object of the class (so Particle cannot call it directly).
  - Use `std::unordered_set` to store the valid particles instead of `std::vector` as sets ensure the elements are unique, and unordered sets use average constant time O(1) for insert, search and delete operations (same as vectors).
+ - Due to the requirement of pushing back the four-vector elements to the four momentum pointer in the parameterised constructor, it was not possible to use the energy setter within the parameterised constructor. This is because if the paramterised constructor is called before any other constructor, then the vector which `four_momentum_ptr` points to would be empty, while `set_E` requires the element to already exist (`(*four_momentum_ptr)[0]`). As a result, both the paramterised constructor and energy setter need to check the energy is not negative, hence the introduction of `validate_energy` private method in FourMomentum class (avoids repeating code for energy validation).
 
 
  ## References

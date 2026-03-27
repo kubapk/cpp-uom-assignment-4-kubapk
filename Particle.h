@@ -28,11 +28,11 @@ private:
     //ptr to a vector of four "0.0" doubles)
 
     //Private member function to check if name is valid
-    static bool is_valid_name(const string& name_in);
+    static string is_valid_name(const string& name_in);
 
 public:
     //Default constructor
-    Particle() = default;
+    Particle() = default; //takes values as above
 
     //Declare parameterised constructor
     Particle(const string& name_in, const FourMomentum& momentum_in);
@@ -50,7 +50,7 @@ public:
     Particle& operator=(Particle&&) = default;
 
     //Setters
-    void set_name(const string name_in);
+    void set_name(const string& name_in);
     void set_four_momentum(const FourMomentum& momentum_in);
 
     //Getters

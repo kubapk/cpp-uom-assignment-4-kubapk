@@ -21,8 +21,12 @@ using std::vector;
 class FourMomentum
 {
 private:
-    std::unique_ptr<vector<double>> four_momentum_ptr;
     //Declare "four_momentum_ptr" as a unique pointer to a vector of doubles
+    std::unique_ptr<vector<double>> four_momentum_ptr;
+    
+    //Private function to check energy is not negative
+    static void validate_energy(const double E);
+
 public:
     //Declare default constructor
     FourMomentum();

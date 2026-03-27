@@ -3,7 +3,9 @@ _____________________________TITLE_____________________________
 PHYS30762 Assignment 4 - Practising Overloading Special 
 Functions/Operators in Classes
 _______________________________________________________________
-This C++ script...
+This C++ script creates a vector of 8 particles using Particle and
+FourMomentum classes. It prints them out and uses move and copy
+semantics to move and copy some of these.
 
 Created by Kuba Kane (ID: 11019699)
 Created on Wed 25 Mar 2026
@@ -27,7 +29,7 @@ int main()
         
         //Add particles to vector
         std::cout<<"\nAdding particles to vector\n"<<string(60, '-')<<std::endl;
-        particles.emplace_back(Particle("electron", FourMomentum(10, 1, 2, 3)));
+        particles.emplace_back(Particle("electron", FourMomentum(10, 2, 3, 1)));
         particles.emplace_back(Particle("electron", FourMomentum(10, 0, 1, 1)));
         particles.emplace_back(Particle("muon", FourMomentum(30, 1, 1, 1)));
         particles.emplace_back(Particle("muon", FourMomentum(25, 1, 0, 1)));

@@ -18,9 +18,9 @@ Created on Tue 24 Mar 2026
 //CONSTRUCTORS
 //Default constructor
 FourMomentum::FourMomentum() :
-        //Initialise unique pointer, pointing to a vector of 4 doubles each allocated as "0.0"
-        four_momentum_ptr{std::make_unique<vector<double>>(4, 0.0)} {}
-        //Uses intialiser list (in case of consts)
+    //Initialise unique pointer, pointing to a vector of 4 doubles each allocated as "0.0"
+    four_momentum_ptr{std::make_unique<vector<double>>(4, 0.0)} {}
+    //Uses intialiser list (in case of consts)
 
 
 //Parameterised constructor
@@ -28,10 +28,7 @@ FourMomentum::FourMomentum(const double energy_in, const double x_momentum_in, c
     const double z_momentum_in)
 {
     //Check energy is not less than or equal to 0
-    if(energy_in <= 0)
-    {
-        throw std::invalid_argument("Energy in FourMomentum is negative or 0. Energy cannot be negative.");
-    }
+    validate_energy(energy_in);
 
     four_momentum_ptr = std::make_unique<vector<double>>();
     (*four_momentum_ptr).push_back(energy_in);
@@ -101,7 +98,8 @@ FourMomentum& FourMomentum::operator=(FourMomentum&& fm)
 //Setter for energy
 void FourMomentum::set_E(const double energy_in)
 {
-    //Check energy is not less than 0
+    //Check energy is not less than or equal to 0
+    validate_energy(energy_in);
 
     (*four_momentum_ptr)[0] = energy_in;
 }
@@ -109,8 +107,8 @@ void FourMomentum::set_E(const double energy_in)
 
 //Setters for px, py, pz
 void FourMomentum::set_px(const double x_momentum_in) {(*four_momentum_ptr)[1] = x_momentum_in;}
-void FourMomentum::set_py(const double z_momentum_in) {(*four_momentum_ptr)[1] = z_momentum_in;}
-void FourMomentum::set_pz(const double y_momentum_in) {(*four_momentum_ptr)[1] = y_momentum_in;}
+void FourMomentum::set_py(const double z_momentum_in) {(*four_momentum_ptr)[2] = z_momentum_in;}
+void FourMomentum::set_pz(const double y_momentum_in) {(*four_momentum_ptr)[3] = y_momentum_in;}
 
 
 //MEMBER FUNCTIONS
@@ -132,6 +130,16 @@ double FourMomentum::dotProduct(const FourMomentum& fm) const
 {
     //Using (+, -, -, -) convention for Minkowski matrix (dot product)
     return(get_E()*fm.get_E() - get_px()*fm.get_px() - get_py()*fm.get_py() - get_pz()*fm.get_pz());
+}
+
+
+//Private member function to check for energy
+void FourMomentum::validate_energy(const double E)
+{
+    if(E < 0)
+    {
+        throw std::invalid_argument("Energy in FourMomentum is negative. Energy must not be negative.");
+    }
 }
 
 
