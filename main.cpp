@@ -26,21 +26,25 @@ int main()
     vector<Particle> particles;
 
     //Add particles to vector
-    particles.push_back(Particle("electron", FourMomentum(10, 1, 2, 3)));
-    particles.push_back(Particle("electron", FourMomentum(20, 0, 1, 1)));
-    particles.push_back(Particle("muon", FourMomentum(30, 1, 1, 1)));
-    particles.push_back(Particle("muon", FourMomentum(25, 1, 0, 1)));
-    particles.push_back(Particle("muon", FourMomentum(34, 1, 0, 1)));
-    particles.push_back(Particle("muon", FourMomentum(15, 0, 2, 1)));
-    particles.push_back(Particle("tau", FourMomentum(10, 1, 2, 1)));
-    particles.push_back(Particle("tau", FourMomentum(25, 2, 3, 1)));
+    std::cout<<"\nAdding particles to vector\n"<<string(60, '-')<<std::endl;
+    particles.emplace_back(Particle("electron", FourMomentum(10, 1, 2, 3)));
+    particles.emplace_back(Particle("electron", FourMomentum(20, 0, 1, 1)));
+    particles.emplace_back(Particle("muon", FourMomentum(30, 1, 1, 1)));
+    particles.emplace_back(Particle("muon", FourMomentum(25, 1, 0, 1)));
+    particles.emplace_back(Particle("muon", FourMomentum(34, 1, 0, 1)));
+    particles.emplace_back(Particle("muon", FourMomentum(15, 0, 2, 1)));
+    particles.emplace_back(Particle("tau", FourMomentum(10, 1, 2, 1)));
+    particles.emplace_back(Particle("tau", FourMomentum(25, 2, 3, 1)));
     //PUSH BACK OR emplace_back
+    std::cout<<string(60, '-')<<"\n"<<std::endl;
 
     //Print out all vectors
+    std::cout<<"\nPrint out vectors\n"<<string(60, '-')<<std::endl;
     for(size_t i{}; i<particles.size(); i++)
     {
         std::cout<<particles[i]<<"\n"<<std::endl;
     }
+    std::cout<<string(60, '-')<<"\n"<<std::endl;
 
 
     std::cout<<"\nSum of the four momenta of the 2 electrons\n"<<string(60, '-')<<std::endl;
@@ -56,7 +60,9 @@ int main()
     std::cout<<"\nCopy first electron to a new electron using copy assignment\n"<<string(60, '-')<<std::endl;
     //Assignmnent requires the new electron to already exist
     Particle new_electron("electron", FourMomentum()); //uses default FourMomentum
+    std::cout<<"Test"<<std::endl;
     new_electron = particles[0];
+    std::cout<<"Test 2"<<std::endl;
     std::cout<<"New electron is: \n" <<particles[0] <<std::endl;
     std::cout<<string(60, '-')<<"\n"<<std::endl;
 

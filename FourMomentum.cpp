@@ -52,7 +52,7 @@ FourMomentum::FourMomentum(const FourMomentum& fm) :
 //Copy assignment operator
 FourMomentum& FourMomentum::operator=(const FourMomentum& fm)
 {
-    std::cout<<"Calling FourMomentum assignment operator"<<std::endl;
+    std::cout<<"Calling FourMomentum copy assignment operator"<<std::endl;
     //Check for self-assignment
     if(&fm == this) return *this;
     //if fm as FourMomentum object (i.e. dereferenced fm) is same as object calling assignment

@@ -48,7 +48,7 @@ public:
 
     //Setters
     void set_name(const string name_in);
-    void set_four_momentum(const FourMomentum momentum_in) {momentum = momentum_in;}
+    void set_four_momentum(const FourMomentum& momentum_in) {momentum = momentum_in;}
 
     //Getters
     const string& get_name() const {return name;}

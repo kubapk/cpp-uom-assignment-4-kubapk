@@ -16,7 +16,7 @@ Created on Wed 25 Mar 2026
 
 //CONSTRUCTORS
 //Paramterised constructor
-Particle::Particle(const string& name_in, const FourMomentum& momentum_in)
+Particle::Particle(const string& name_in, const FourMomentum& momentum_in) 
 {
     //Name check is done via setter to avoid code repetition
     set_name(name_in);
