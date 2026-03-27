@@ -10,14 +10,11 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
 ## Program Reasoning
 ### FourMomentum as a separate class
  - Having four momentum as a separate class makes more sense because it is a property of a particle with its own characteristics
-
  - A particle does not need the details of these characteristics, so particle need not be a class inherented from four momentum class
-
  - This project required four-momentum to be implemented as a pointer to a dynamically allocated vector 
    - Option 1: Implement FourMomentum class with members E, px, py, pz and then initialise a vector (with dynamically allocated memory) in
    the Particle class, which copies each member of FourMomentum using the getters inside the FourMomentum class and pushes them to the vector.
    - Option 2: Implement FourMomentum object as a vector storing E, px, py, pz, and keep this format 
- 
  - Option 2 is better as option 1 forces a deep copy to be made of the members of the FourMomentum class, and can tberefore lead to issues since there are 2 copies of the data, e.g. if x momentum is updated in FourMomentum class, it does not update the x momentum for the corresponding particle class.
 
 ### Passing by reference or by value
@@ -35,13 +32,14 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
 
 ### Minimising constructor / assignment operator calls
  - When performing the sum of the four momenta and the dot product, 2 copy constructors were called before the operation was performed. This is because the getters of the Particle and FourMomentum class were passed by value, which creates a deep copy as per the copy constructor. Both the sum and the four momenta (used in main) call .get_four_momentum() twice (one for both particles), hence calling copy constructor twice. This was resolved by passing all getters of both classes by reference. 
- 
  - The sum of the four momenta calls the destructor as the + operator requires intialisation of a FourMomentum object on the return line which goes out of socpe when the function ends. The dot product does not require initialisation of a FourMomentum object as an object is passed into the DotProduct function, which is only destructed at the end of the program.
-
  - The copy assignment operator used in main (used to copy the first electron to a new electron) called the copy constructor first unecessarily. This occured because using the asisgnment operator required initialisation of a new electron via the Particle class parameterised constructor, which uses `set_four_momentum` to initialise the FourMomentum object as the user inputted FourMomentum object. This uses copy assignment operator, hence this line can be seen. However, an unecessary copy constructor was used because the `set_four_momentum` passed the user input by value. This was resolved by instead passing by reference.
 
 ### Constructors / assignment operators
  - The Particle class is set to use the default constructors and assignment operators for both copy and move operations, since the Particle class contains only string (`name`) and FourMomentum (`momentum`) objects. The string will use deep copy by default, and the FourMomentum object will use the constructors / assignment operators defined in the FourMomentum class.
+
+### Using implementation file
+ - All constructors (default, parameterised, copy, move), assignment operators (copy, move), and setters and getters have been specified in the implementation file unless they are trivial (fit in one line, with no sub-scopes).
 
 
  ## References

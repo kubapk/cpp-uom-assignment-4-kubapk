@@ -34,6 +34,11 @@ void Particle::set_name(const string name_in)
 }
 
 
+//Setter for particle momentum
+void Particle::set_four_momentum(const FourMomentum& momentum_in) 
+{momentum = momentum_in;}
+
+
 //FRIEND FUNCTIONS
 //Friend function to print Particle data
 std::ostream& operator<<(std::ostream& os, const Particle& p)

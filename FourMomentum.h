@@ -24,7 +24,7 @@ private:
     std::unique_ptr<vector<double>> four_momentum_ptr;
     //Declare "four_momentum_ptr" as a unique pointer to a vector of doubles
 public:
-    //Default constructor
+    //Declare default constructor
     FourMomentum();
 
     //Declare paramterised constructor
