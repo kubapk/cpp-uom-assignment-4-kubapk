@@ -11,6 +11,7 @@ Created on Wed 25 Mar 2026
 */
 
 #include<iostream>
+#include<unordered_set> //to store a vector of unique numbers
 #include "Particle.h"
 
 
@@ -36,6 +37,22 @@ void Particle::set_name(const string name_in)
 //Setter for particle momentum
 void Particle::set_four_momentum(const FourMomentum& momentum_in) 
 {momentum = momentum_in;}
+
+
+//MEMBER FUNCTIONS
+//Private member function to check for valid particle names
+bool Particle::is_valid_name(const string& name_in)
+{
+    static const std::unordered_set<string> valid_names = {
+        "electron", "muon", "tau", "electron nuetrino", "muon neutrino",
+        "tau neutrino", "up", "charm", "top", "down", "strange", "bottom",
+        "photon", "gluon", "positive W boson", "negative W boson", "Z boson",
+        "Higgs boson"};
+
+    return valid_names.count(name_in);
+    //if name is not in the unordered set, 0 is returned (false)
+}
+
 
 
 //FRIEND FUNCTIONS

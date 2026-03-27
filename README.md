@@ -71,7 +71,7 @@ Higgs bosson
 
 ### Input validation
  - Unlike assignment 3, it is not purposeful to use a validation file to check particles for their properties. Firstly, the energy and momentum of the particle is not a set value for a given particle, and there could many instances of the same particle with different energy or momenta. Secondly, there are omly 17+1 particles in the Standard Model, and so only 18 possible names that should be allowed for the particles. Implementing these in a validation file would allow the user to edit them more easily, and also potentially break the program if the format was changed.
- - The valid particle names are therefore managed as a private static method in the Particle class, disallowing any setters or getters which could modify the list. This method checks if the inputted particle name is valid by comparing it to a valid particle name list. Static ensures that during run time the list inside the function cannot be modified.
+ - The valid particle names are therefore managed as a private static method in the Particle class, disallowing any setters or getters which could modify the list. This method checks if the inputted particle name is valid by comparing it to a valid particle name list. Static ensures that during run time the list inside the function cannot be modified - belongs to the class rather than any specific object of the class (so Particle cannot call it directly).
  - Use `std::unordered_set` to store the valid particles instead of `std::vector` as sets ensure the elements are unique, and unordered sets use average constant time O(1) for insert, search and delete operations (same as vectors).
 
 
@@ -85,6 +85,8 @@ Higgs bosson
  [4] https://www.geeksforgeeks.org/cpp/unordered_set-in-cpp-stl/
 
  [5] https://www.geeksforgeeks.org/cpp/difference-between-stdset-vs-stdvector-in-c-stl/
+
+ [6] https://www.geeksforgeeks.org/cpp/static-member-function-in-cpp/
 
 
  ## TO DO
