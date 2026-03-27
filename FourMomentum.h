@@ -55,10 +55,12 @@ public:
     //Not const funcs as four momentum is modified
 
     //Getters
-    double get_E() const {return (*four_momentum_ptr)[0];}
-    double get_px() const {return (*four_momentum_ptr)[1];}
-    double get_py() const {return (*four_momentum_ptr)[2];}
-    double get_pz() const {return (*four_momentum_ptr)[3];}
+    const double& get_E() const {return (*four_momentum_ptr)[0];}
+    const double& get_px() const {return (*four_momentum_ptr)[1];}
+    const double& get_py() const {return (*four_momentum_ptr)[2];}
+    const double& get_pz() const {return (*four_momentum_ptr)[3];}
+    //get_E() is a const function which returns a reference to a const double (ensures *this
+    //is not modified)
 
     //Prototyping member functions (overload operators)
     FourMomentum operator+(const FourMomentum& fm) const;

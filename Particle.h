@@ -51,8 +51,8 @@ public:
     void set_four_momentum(const FourMomentum momentum_in) {momentum = momentum_in;}
 
     //Getters
-    string get_name() const {return name;}
-    FourMomentum get_four_momentum() const {return momentum;}
+    const string& get_name() const {return name;}
+    const FourMomentum& get_four_momentum() const {return momentum;}
 
     //Prototyping friend functions
     friend std::ostream& operator<<(std::ostream& os, const Particle& p);

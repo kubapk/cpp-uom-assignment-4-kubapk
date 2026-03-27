@@ -27,14 +27,16 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
 
 ### Operator overloading
  - Should these be implemented as member functions, friend functions, or non-member functions? To keep in line with encapsulation, since the operations dot product and sum only deal with FourMomentum objects (and their data members), they should not be non-member functions. As such, there is also no need to consider them as friend functions - all the data members they need are in the FourMomentum class.
- - Issue with the + operator in FourMomentum class when I tried to have it return a pointer to a FourMomentum object, but inside the code it returned a FourMomentum object initiated inside the "+" operator function, which went out of scope and could not be pointed to. Resolved by enforcing the function to return FourMomentum object (not pointer), resulting in no need for initiation of object - it can be simply specified on return line.
+ - Issue with the + operator in FourMomentum class when I tried to have it return a pointer to a FourMomentum object, because inside the code it returned a FourMomentum object which was initiated inside the + operator function. This went out of scope and could not be pointed to. This was resolved by enforcing the function to return FourMomentum object (not a pointer). It was also uncessary to initiate a temporary object inside the function - it can be simply specified on the return line.
 
  ### Paramterised constructor 
  - Use initialiser list or assignment inside parameterised constructor? To be more memory efficient, it is better to use initialisers where possible, since using assignment means the objects are initialised using default constructor first, and then the rvalues are assigned ("copied") to them. This costs an extra unecessary step.
 
- ### Constructors / assignment operators in Particle class
- - Use default? If print message required, need to define them manually
 
+ ### Minimising constructor / assignment operator calls
+ - When performing the sum of the four momenta and the dot product, 2 copy constructors were called before the operation was performed. This is because the getters of the Particle and FourMomentum class were passed by value, which creates a deep copy as per the copy constructor. Both the sum and the four momenta (used in main) call .get_four_momentum() twice (one for both particles), hence calling copy constructor twice. This was resolved by passing all getters of both classes by reference. 
+ 
+ - The sum of the four momenta calls the destructor as the + operator requires intialisation of a FourMomentum object on the return line which goes out of socpe when the function ends. The dot product does not require initialisation of a FourMomentum object as an object is passed into the DotProduct function, which is only destructed at the end of the program.
 
  ## References
  [1] https://www.studyplan.dev/pro-cpp/copy-semantics#using-unique-pointers

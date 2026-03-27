@@ -44,7 +44,7 @@ int main()
 
 
     std::cout<<"\nSum of the four momenta of the 2 electrons\n"<<string(60, '-')<<std::endl;
-    std::cout<<particles[0].get_four_momentum()+particles[1].get_four_momentum()<<std::endl;
+    std::cout<<particles[0].get_four_momentum() + particles[1].get_four_momentum()<<std::endl;
     std::cout<<string(60, '-')<<"\n"<<std::endl;
 
 
@@ -53,7 +53,7 @@ int main()
     std::cout<<string(60, '-')<<"\n"<<std::endl;
 
 
-    std::cout<<"\nAssignment operator of first electron to a new electron\n"<<string(60, '-')<<std::endl;
+    std::cout<<"\nCopy first electron to a new electron using copy assignment\n"<<string(60, '-')<<std::endl;
     //Assignmnent requires the new electron to already exist
     Particle new_electron("electron", FourMomentum()); //uses default FourMomentum
     new_electron = particles[0];
