@@ -27,7 +27,11 @@ FourMomentum::FourMomentum() :
 FourMomentum::FourMomentum(const double energy_in, const double x_momentum_in, const double y_momentum_in, 
     const double z_momentum_in)
 {
-    //Check energy is not less than 0
+    //Check energy is not less than or equal to 0
+    if(energy_in <= 0)
+    {
+        throw std::invalid_argument("Energy in FourMomentum is negative or 0. Energy cannot be negative.");
+    }
 
     four_momentum_ptr = std::make_unique<vector<double>>();
     (*four_momentum_ptr).push_back(energy_in);
