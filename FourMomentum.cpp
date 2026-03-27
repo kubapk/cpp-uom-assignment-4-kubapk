@@ -16,6 +16,13 @@ Created on Tue 24 Mar 2026
 
 
 //CONSTRUCTORS
+//Default constructor
+FourMomentum::FourMomentum() :
+        //Initialise unique pointer, pointing to a vector of 4 doubles each allocated as "0.0"
+        four_momentum_ptr{std::make_unique<vector<double>>(4, 0.0)} {}
+        //Uses intialiser list (in case of consts)
+
+
 //Parameterised constructor
 FourMomentum::FourMomentum(const double energy_in, const double x_momentum_in, const double y_momentum_in, 
     const double z_momentum_in)
@@ -94,6 +101,12 @@ void FourMomentum::set_E(const double energy_in)
 
     (*four_momentum_ptr)[0] = energy_in;
 }
+
+
+//Setters for px, py, pz
+void FourMomentum::set_px(const double x_momentum_in) {(*four_momentum_ptr)[1] = x_momentum_in;}
+void FourMomentum::set_py(const double z_momentum_in) {(*four_momentum_ptr)[1] = z_momentum_in;}
+void FourMomentum::set_pz(const double y_momentum_in) {(*four_momentum_ptr)[1] = y_momentum_in;}
 
 
 //MEMBER FUNCTIONS

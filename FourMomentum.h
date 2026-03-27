@@ -25,10 +25,7 @@ private:
     //Declare "four_momentum_ptr" as a unique pointer to a vector of doubles
 public:
     //Default constructor
-    FourMomentum() :
-        //Initialise unique pointer, pointing to a vector of 4 doubles each allocated as "0.0"
-        four_momentum_ptr{std::make_unique<vector<double>>(4, 0.0)} {}
-        //Uses intialiser list (in case of consts)
+    FourMomentum();
 
     //Declare paramterised constructor
     FourMomentum(const double energy_in, const double x_momentum_in, const double y_momentum_in, 
@@ -48,10 +45,10 @@ public:
     FourMomentum& operator=(FourMomentum&&); //move operation
 
     //Setters
-    void set_E(const double energy_in); //in implementation file
-    void set_px(const double x_momentum_in) {(*four_momentum_ptr)[1] = x_momentum_in;}
-    void set_py(const double z_momentum_in) {(*four_momentum_ptr)[1] = z_momentum_in;}
-    void set_pz(const double y_momentum_in) {(*four_momentum_ptr)[1] = y_momentum_in;}
+    void set_E(const double energy_in);
+    void set_px(const double x_momentum_in);
+    void set_py(const double z_momentum_in);
+    void set_pz(const double y_momentum_in);
     //Not const funcs as four momentum is modified
 
     //Getters
