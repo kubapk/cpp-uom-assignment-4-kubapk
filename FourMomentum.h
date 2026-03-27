@@ -32,7 +32,7 @@ public:
         const double z_momentum_in);
 
     //Destructor
-    ~FourMomentum() {std::cout<<"Calling FourMomentum destructor"<<std::endl;}
+    ~FourMomentum() {std::cout<<" >> Calling FourMomentum destructor"<<std::endl;}
 
     //Declare copy constructors
     FourMomentum(const FourMomentum&); //copy operation

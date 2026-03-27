@@ -52,14 +52,14 @@ FourMomentum::FourMomentum(const FourMomentum& fm) :
     //To get this vector, note fm is FourMomentum object, we just want pointer to four momentum
     //class
     four_momentum_ptr{std::make_unique<vector<double>>(*fm.four_momentum_ptr)} 
-    {std::cout<<"Calling FourMomentum copy constructor"<<std::endl;}
+    {std::cout<<" >> Calling FourMomentum copy constructor"<<std::endl;}
     //copy constructor uses initialisation rather than assignment
 
 
 //Copy assignment operator
 FourMomentum& FourMomentum::operator=(const FourMomentum& fm)
 {
-    std::cout<<"Calling FourMomentum copy assignment operator"<<std::endl;
+    std::cout<<" >> Calling FourMomentum copy assignment operator"<<std::endl;
     //Check for self-assignment
     if(&fm == this) return *this;
     //if fm as FourMomentum object (i.e. dereferenced fm) is same as object calling assignment
@@ -75,7 +75,7 @@ FourMomentum& FourMomentum::operator=(const FourMomentum& fm)
 //Move constructor
 FourMomentum::FourMomentum(FourMomentum&& fm) :
     four_momentum_ptr{std::move(fm.four_momentum_ptr)} 
-    {std::cout<<"Calling FourMomentum move constructor"<<std::endl;}
+    {std::cout<<" >> Calling FourMomentum move constructor"<<std::endl;}
     //Standard library unique pointers allow us to transfer ownership (to a different object) using
     //std::move - this transfers the pointers with each other, so the new four_momentum_ptr becomes
     //the four_momentum_ptr of "fm"
@@ -85,7 +85,7 @@ FourMomentum::FourMomentum(FourMomentum&& fm) :
 FourMomentum& FourMomentum::operator=(FourMomentum&& fm)
 //Return reference to new FourMomentum object after assignment - more memory efficient
 {
-    std::cout<<"Calling FourMomentum move assignment operator"<<std::endl;
+    std::cout<<" >> Calling FourMomentum move assignment operator"<<std::endl;
     if(&fm == this) return *this;
 
     four_momentum_ptr = std::move(fm.four_momentum_ptr);
@@ -126,8 +126,8 @@ FourMomentum FourMomentum::operator+(const FourMomentum& fm) const
 //Dot product
 double FourMomentum::dotProduct(const FourMomentum& fm) const
 {
-    //Using metric tensor of special relativity
-    return(-1*get_E()*fm.get_E() + get_px()*fm.get_px() + get_py()*fm.get_py() + get_pz()*fm.get_pz());
+    //Using (+, -, -, -) convention for Minkowski matrix (dot product)
+    return(get_E()*fm.get_E() - get_px()*fm.get_px() - get_py()*fm.get_py() - get_pz()*fm.get_pz());
 }
 
 

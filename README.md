@@ -46,9 +46,11 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
 
  ## References
  [1] https://www.studyplan.dev/pro-cpp/copy-semantics#using-unique-pointers
+
  [2] https://www.studyplan.dev/pro-cpp/move-semantics
+
  [3] https://andreasfertig.com/blog/2023/04/push_back-vs-emplace_back-when-to-use-what/
 
 
- ##TO DO
+ ## TO DO
  - Move all constructors & ops incl setters & getters to implementation file
