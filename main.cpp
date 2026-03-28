@@ -39,6 +39,7 @@ int main()
         particles.emplace_back(Particle("tau", FourMomentum(10, 1, 2, 1)));
         particles.emplace_back(Particle("tau", FourMomentum(25, 2, 3, 1)));
         std::cout<<string(60, '-')<<"\n"<<std::endl;
+        //emplace back used since it avoids unecessary copying which push back uses
 
 
         //Print out all vectors
