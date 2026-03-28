@@ -16,6 +16,8 @@
 ### Running the program as-is
 This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o main.exe -Wall`. The program can then be run by calling the file `main.exe`.
 
+For an explanation of the output when running this, please see the *Output explanation* section.
+
 ### Modifying the main file, `main.cpp`
 These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own). Intialising a particle is easiest via the parameterised constructor of the Particle and FourMomentum class, i.e. `Particle(<particle-name>, FourMomentum(<E>, <px>, <py>, <pz>))`, where E, px, py, pz are the energy and momenta in the x, y, z directions. Setters and getters can also be used (see section below). Enforced through setters and the parameterised constructor, E, px, py, pz must all be doubles, and E cannot be negative.
 
@@ -90,7 +92,7 @@ A different approach could be to just check the invariant mass is positive, stil
  - Option 2 is better as option 1 forces a deep copy to be made of the members of the FourMomentum class, and can therefore lead to issues since there are 2 copies of the data, e.g. if x momentum is updated in FourMomentum class, it does not update the x momentum for the corresponding particle class.
 
 ### Passing by reference or by value
- - Passed by reference in constructor of Particle class as it takes in FourMomentum object which need not be copied, while passed by value in constructor of FourMomentum class as it takes in doubles which are not expensive to copy. CHECK THIS
+ - Passed by reference in constructor of Particle class as it takes in FourMomentum object which need not be copied, while passed by value in constructor of FourMomentum class as it takes in doubles which are not expensive to copy.
 
 ### Copy constructor
  - Instead of manually copying the four vector elements of FourMomentum, can use vector copy constructor, to initialise a vector by copying a given vector. The copy constructor takes in a FourMomentum object which is to be copied. We first need to access its private member, "four_momentum_ptr" to get the unique pointer to this object's vector containing 4 doubles (E, px, py, pz). This can be dereferenced to get the actual vector to be copied, which can be passed into a new vector and copied with the vector copy constructor. This can be then made into a unique pointer, which the object in the copy constructor (the object which the copy should go to) can be initialised with. This achieves the copy without manually copying each element of the vector (which would require a size data member of the FourMomentum class).
@@ -124,6 +126,23 @@ A different approach could be to just check the invariant mass is positive, stil
 
 ### Getters and setters
  - When trying `electron_test.get_four_momentum().set_px(10);`, there was an issue since `get_four_momentum()` in Particle class returns a reference to a const FourMomentum object, and so `set_px()` could not be called on it as it would be modifying the FourMomentum object. To resolve this issue, a function with the same name was introduced which returns a reference to a non-const FourMomentum. In the case that a user wants to set a particle to be const (e.g. they don't want to accidentily modify it in their main function), the original `get_four_momentum()` function (returning const) was kept so that the user could still get the four momentum of a const particle.
+
+
+## Output explanation
+*Note the numbers mentioned here match those specified in `main.cpp`*
+
+ - The output of `main.cpp` first shows a copy assignment operator, a move constructor, and then a destructor twice. This is due to how vector push back / emplace back functions - it creates a copy of the particle and moves it to the space assigned inside the vector. 
+
+ - The sum of the four momenta of the 2 electrons shows that a destructor is called at the end. This is because a new FourMomentum object is created assigning each component as the sum of the two FourMomentum object being summed. This new FourMomentum object, since it is initialised (via parameterised constructor) inside the sum function, goes out of scope when the function terminates, hence calling the destructor. The dot product does not have this issue as a double is returned, and so new FourMomentum object is required.
+
+ - For the electron copy assignment operator (3), a new Particle object is first created, as triggering the assignment operator requires the object to be copied to already exist. Creating this new Particle object via the parameterised constructor calls the `set_four_momentum` function, which uses an assignment operator to assign the inputted FourMomentum via main to the FourMomentum of the Particle object. Note the same applies for the `set_name` function, which uses the copy assignment operator of the Particle object, though the assignment operators / constructors of the Particle class have been set not to print out anything. 
+ 
+ - The destructor is also called in (3) because of the use of the FourMomentum assignment operator when creating the new Particle object. The FourMomentum assignment operator creates a new unique pointer to a FourMomentum object, which then lives inside the parameterised constructor of the Particle object. Once the parameterised construtor finishes and the name & four momentum is set, this new unique pointer, living only inside the parameterised cosntructor, is destructed. 
+
+ - When using copy constructor for muon (4) and move constructor for muon (5), only the copy and move constructors are called. This is because, being constructors, the new (or moved) particles can be intialised on the same line, and hence there is no need for additional copy assignment operators as in the case for (3).
+
+ - The move assignment operator for the muon (6), like in case (3), calls the copy assignment operator and destructor when the new muon particle is initialised, before the first muon is copied to it.
+
 
 
 ## Disclosure of Delegation to Generative AI
