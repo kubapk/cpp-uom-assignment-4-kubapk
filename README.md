@@ -58,6 +58,8 @@ The exception is that you can modify the whole FourMomentum object using `set_fo
 electron_test.set_four_momentum(FourMomentum(0, 1, 1, 1));
 ```
 
+To see more use cases of setters and getters from these classes, see the file `test.cpp`. You can compile this using the compilation line `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o mtest.exe -Wall`, and then running the file `test.exe`.
+
 
 ## Physics Behind the Program
 ### Conventions used in the program
@@ -111,9 +113,10 @@ A different approach could be to just check the invariant mass is positive, stil
  - Use `std::unordered_set` to store the valid particles instead of `std::vector` as sets ensure the elements are unique, and unordered sets use average constant time O(1) for insert, search and delete operations (same as vectors).
  - Due to the requirement of pushing back the four-vector elements to the four momentum pointer in the parameterised constructor, it was not possible to use the energy setter within the parameterised constructor. This is because if the paramterised constructor is called before any other constructor, then the vector which `four_momentum_ptr` points to would be empty, while `set_E` requires the element to already exist (`(*four_momentum_ptr)[0]`). As a result, both the paramterised constructor and energy setter need to check the energy is not negative, hence the introduction of `validate_energy` private method in FourMomentum class (avoids repeating code for energy validation).
  - Originally had the Particle class default constructor set name to "unamed", but this was changed to "electron" so that it was a valid particle (as specified in unordered set of valid particles).
+ - No additional checks for energy or particle name are required in assignment operators or copy constructors, because the two objects in question which undergo copy or move semantics must both be Particle or FourMomentum objects, which via default or parameterised constructors fulfill the requirements.
 
 ### Getters and setters
- - When trying `electron_test.get_four_momentum().set_px(10);`, there was an issue since `get_four_momentum()` in Particle class returns a reference to a const FourMomentum object, and so `set_px()` could not be called on it as it would be modifying the FourMomentum object.
+ - When trying `electron_test.get_four_momentum().set_px(10);`, there was an issue since `get_four_momentum()` in Particle class returns a reference to a const FourMomentum object, and so `set_px()` could not be called on it as it would be modifying the FourMomentum object. To resolve this issue, `get_four_momentum` was introduced which returens a reference to a non-const FourMomentum. 
 
 
 ## Disclosure of Delegation to Generative AI
