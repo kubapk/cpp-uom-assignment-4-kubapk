@@ -42,13 +42,14 @@ int main()
         //Change momentum
         std::cout<<"\nChanging four momentum using particle setter"<<std::endl;
         electron_test.set_four_momentum(FourMomentum(0, 1, 1, 1));
-        std::cout<<electron_test<<"\n"<<std::endl;
+        std::cout<<electron_test<<std::endl;
 
         //Create a constant particle - we don't want to modify it
         //This is why we need get_four_momentum to be able to return const as well
         std::cout<<"\nCreating const particle p1"<<std::endl;
-        const Particle p1{Particle("muon", FourMomentum(20, 0, 1, 0))};
-        std::cout<<" Get four momentum: "<<p1.get_four_momentum()<<"\n"<<std::endl;
+        const Particle p1{Particle("up", FourMomentum(20, 0, 1, 0))};
+        std::cout<<" Get name: "<<p1.get_name()<<std::endl;
+        std::cout<<" Get four momentum: "<<p1.get_four_momentum()<<std::endl;
 
         //Edit properties of const particle
         //p1.get_four_momentum().set_E(10) //does not update const particle

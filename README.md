@@ -44,7 +44,7 @@ Higgs bosson
 
 You can check if the move semantics work by uncommenting the lines which print First muon and First electron (sections 5 and 6 in `main.cpp`). Doing so will return an error, given that it cannot print out the Particle object which has been moved from, as its pointer would have become null. This is handled by the smart pointer.
 
-If you wish to make changes to how four momenta works, any changes should be made within the FourMomentum class (and not in the main file) to adhere to encapsulation. An example idea of how FourMomentum could be changed is provided in the *Physics Behind the Program* section, modifying the constructors and getters/setters to disallow an energy input. Despite this, there is no instance when the non-negativity constraint on the energy should be removed.
+If you wish to make changes to how four momenta works, any changes should be made within the FourMomentum class (and not in the main file) to adhere to encapsulation. An example idea of how FourMomentum could be changed is provided in the *Physics Behind the Program* section, which removes the energy from the FourMomentum parameterised constructor and instead calculates it internally. Even in this case, where energy is not an input parameter, there is no instance when the non-negativity constraint on the energy would need to be removed.
 
 ### Using setters and getters
 Setters and getters can also be used but require the FourMomentum or Particle object to be initialised first either via the default constructor or the parameterised constructor. The easiest way to think about using these classes is by thinking of FourMomentum as a "hidden" property of a Particle. If you want to modify elements of the FourMomentum, you must call the FourMomentum object from the Particle object, e.g. if you have a particle called `electron_test`:
@@ -58,7 +58,9 @@ The exception is that you can modify the whole FourMomentum object using `set_fo
 electron_test.set_four_momentum(FourMomentum(0, 1, 1, 1));
 ```
 
-To see more use cases of setters and getters from these classes, see the file `test.cpp`. You can compile this using the compilation line `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o mtest.exe -Wall`, and then running the file `test.exe`.
+You can also set Particle or FourMomenta objects to be const.
+
+To see more use cases of setters and getters from these classes, see the file `test.cpp`. You can compile this using the compilation line `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o test.exe -Wall`, and then running the file `test.exe`.
 
 
 ## Physics Behind the Program
@@ -116,7 +118,7 @@ A different approach could be to just check the invariant mass is positive, stil
  - No additional checks for energy or particle name are required in assignment operators or copy constructors, because the two objects in question which undergo copy or move semantics must both be Particle or FourMomentum objects, which via default or parameterised constructors fulfill the requirements.
 
 ### Getters and setters
- - When trying `electron_test.get_four_momentum().set_px(10);`, there was an issue since `get_four_momentum()` in Particle class returns a reference to a const FourMomentum object, and so `set_px()` could not be called on it as it would be modifying the FourMomentum object. To resolve this issue, `get_four_momentum` was introduced which returens a reference to a non-const FourMomentum. 
+ - When trying `electron_test.get_four_momentum().set_px(10);`, there was an issue since `get_four_momentum()` in Particle class returns a reference to a const FourMomentum object, and so `set_px()` could not be called on it as it would be modifying the FourMomentum object. To resolve this issue, a function with the same name was introduced which returns a reference to a non-const FourMomentum. In the case that a user wants to set a particle to be const (e.g. they don't want to accidentily modify it in their main function), the original `get_four_momentum()` function (returning const) was kept so that the user could still get the four momentum of a const particle.
 
 
 ## Disclosure of Delegation to Generative AI
