@@ -3,7 +3,11 @@
 
 > [!IMPORTANT]
 > ### Program summary
-> This program...
+> This program allows you to define particles with a name and a FourMomentum object, which consists of an energy, as well as a momentum in the x, y, and z directions. Four momenta of particles can be summed via the `+` operator, and their dot product can be found by calling `.dotProduct()`. This is called by a FourMomentum object, and takes in a FourMomentum object with which the dot product is to be performed.
+>
+> The following classes are defined in this program:
+> - **FourMomentum:** Contains a unique smart pointer to a vector of 4 doubles, whose elements correspond to the energy, x momentum, y momentum, and z momentum. These elements are set to 0 if FourMomentum objects are intialised via the default constructor, and can be set to any doubles (as long as energy is not negative) via the parameterised constructors or setters. Each element of the vector can be retrieved using getters. Given the vector is intialised via a smart pointer, copy and move constructors and assignment operators are defined, making use of the vector copy constructor and `std::move`. This class also contains a private member method `validate_energy` used to check energy is not negative.
+> - **Particle:** Contains a name (string) and FourMomentum object (from class above). The default constructor sets name to "electron" and uses default FourMomentum constructor to set energy and momentum values. The copy and move constructors and assignment operators are set to default, as string object will use the copy and move semantics required in this case, and the FourMomentum object will use the semantics defined in the FourMomentum class. The private member method `is_valid_name` returns the name as long as it is one of the 18 particles in the standard model.
 
 
 ## User Guidelines
@@ -11,7 +15,7 @@
 This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o main.exe -Wall`. The program can then be run by calling the file `main.exe`.
 
 ### Modifying the main file, `main.cpp`
-These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own).
+These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own). To initialise a particle, you can do see via the parameterised constructor of the Particle class, `Particle(<particle-name>, FourMomentum(<E>, <px>, <py>, <pz>))`, where
 
 If you wish to specify your own particle name, it must be in the list of valid names (containted within a private member function in the Particle class). The valid particles are given below. Note that these are case-sensitive and must be entered exactly as seen.
 
@@ -82,11 +86,12 @@ The program could be improved by taking advantage of the equation $m^2 = E^2 - p
  - All constructors (default, parameterised, copy, move), assignment operators (copy, move), and setters and getters have been specified in the implementation file unless they are trivial (fit in one line, with no sub-scopes).
 
 
-### Input validation
+### Object input validation
  - Unlike assignment 3, it is not purposeful to use a validation file to check particles for their properties. Firstly, the energy and momentum of the particle is not a set value for a given particle, and there could many instances of the same particle with different energy or momenta. Secondly, there are only 17+1 particles in the Standard Model, and so only 18 possible names that should be allowed for the particles. Implementing these in a validation file would allow the user to edit them more easily, and also potentially break the program if the format was changed.
  - The valid particle names are therefore managed as a private static method in the Particle class, disallowing any setters or getters which could modify the list. This method checks if the inputted particle name is valid by comparing it to a valid particle name list. Static ensures that during run time the list inside the function cannot be modified - belongs to the class rather than any specific object of the class (so Particle cannot call it directly).
  - Use `std::unordered_set` to store the valid particles instead of `std::vector` as sets ensure the elements are unique, and unordered sets use average constant time O(1) for insert, search and delete operations (same as vectors).
  - Due to the requirement of pushing back the four-vector elements to the four momentum pointer in the parameterised constructor, it was not possible to use the energy setter within the parameterised constructor. This is because if the paramterised constructor is called before any other constructor, then the vector which `four_momentum_ptr` points to would be empty, while `set_E` requires the element to already exist (`(*four_momentum_ptr)[0]`). As a result, both the paramterised constructor and energy setter need to check the energy is not negative, hence the introduction of `validate_energy` private method in FourMomentum class (avoids repeating code for energy validation).
+ - Originally had the Particle class default constructor set name to "unamed", but this was changed to "electron" so that it was a valid particle (as specified in unordered set of valid particles).
 
 
 ## Disclosure of Delegation to Generative AI

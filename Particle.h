@@ -21,7 +21,7 @@ using std::string;
 class Particle
 {
 private:
-    string name{"unnamed"};
+    string name{"electron"};
     FourMomentum momentum;
     //FourMomentum is an object whose only data member is a unique_ptr, which need not be specified
     //as it is handled by the default constructor within FourMomentum class (which specifies the unique
