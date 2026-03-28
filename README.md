@@ -17,7 +17,7 @@
 This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o main.exe -Wall`. The program can then be run by calling the file `main.exe`.
 
 ### Modifying the main file, `main.cpp`
-These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own). Intialising a particle is easiest via the parameterised constructor of the Particle and FourMomentum class, i.e. `Particle(<particle-name>, FourMomentum(<E>, <px>, <py>, <pz>))`, where E, px, py, pz are the energy and momenta in the x, y, z directions. Setters and getters can also be used but require the FourMomentum or Particle object to be initialised first (e.g. via default constructor).
+These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own). Intialising a particle is easiest via the parameterised constructor of the Particle and FourMomentum class, i.e. `Particle(<particle-name>, FourMomentum(<E>, <px>, <py>, <pz>))`, where E, px, py, pz are the energy and momenta in the x, y, z directions. Setters and getters can also be used (see section below). Enforced through setters and the parameterised constructor, E, px, py, pz must all be doubles, and E cannot be negative.
 
 The particle name must be in the list of valid names (containted within a private member function in the Particle class). The valid particles are given below. Note that these are case-sensitive and must be entered exactly as seen below.
 
@@ -46,13 +46,29 @@ You can check if the move semantics work by uncommenting the lines which print F
 
 If you wish to make changes to how four momenta works, any changes should be made within the FourMomentum class (and not in the main file) to adhere to encapsulation. An example idea of how FourMomentum could be changed is provided in the *Physics Behind the Program* section, modifying the constructors and getters/setters to disallow an energy input. Despite this, there is no instance when the non-negativity constraint on the energy should be removed.
 
+### Using setters and getters
+Setters and getters can also be used but require the FourMomentum or Particle object to be initialised first either via the default constructor or the parameterised constructor. The easiest way to think about using these classes is by thinking of FourMomentum as a "hidden" property of a Particle. If you want to modify elements of the FourMomentum, you must call the FourMomentum object from the Particle object, e.g. if you have a particle called `electron_test`:
+```
+Particle electron_test{Particle("electron", FourMomentum(10, 2, 3, 1))};
+electron_test.get_four_momentum().set_px(5);
+```
+
+The expection is that you can modify the whole FourMomentum object using `set_four_momentum` from the Particle class, but this requires a FourMomentum object to be passed, which needs to be initialised or used from a previous initialisation:
+```
+electron_test.set_four_momentum(FourMomentum(0, 1, 1, 1));
+```
+
 
 ## Physics Behind the Program
 ### Conventions used in the program
-Each particle is described by a four vector, following the convention for four momentum in natural units (c=1), and enforcing the constraint that the energy should not be 0. The units of all components are MeV. To perform the dot product, the Minkowski metric is used with the (+, -, -, -) convention, such that $p \cdot q = E_p E_q - p_x q_x - p_y q_y - p_z q_z$.
+Each particle is described by a four vector, following the convention for four momentum in natural units (c=1), and enforcing the constraint that the energy should not be 0. The momentum components in the x, y, z directions may be negative to allow for directions in the negative x, y, z directions respectively. The units of all components are MeV. 
+
+To perform the dot product, the Minkowski metric is used with the (+, -, -, -) convention, such that $p \cdot q = E_p E_q - p_x q_x - p_y q_y - p_z q_z$. 
 
 ### Making the program more physically accurate
 The program could be improved by taking advantage of the equation for invariant mass, $m^2 = E^2 - p^2$. Since all 18 particles in the standard model have a defined mass, a `std::map` could contain each particle name as the key and its mass as the value. When in the main file a Particle is initialised with a given name, this could be mapped to find the corresponding mass. As a result, the FourMomentum constructors would only require the 3 momenta inputs, and could push back the energy to the four momentum vector using the aforementioned equation. This would make the program more accurate in terms of the physics, as otherwise the user could enter an energy and momentum which does not give the correct invariant mass for the particle (which needs to be in the SM).
+
+A different approach could be to just check the invariant mass is positive, still allowing for inputs of E, px, py, pz. This however would not allow setters for the individual momentum components which could temporarily break the check for a positive invariant mass. Storing the masses (as described above) does not suffer this issue as a setter for an individual momentum component would simply change the value of the energy.
 
 
 ## Program Design & Reasoning
@@ -79,8 +95,8 @@ The program could be improved by taking advantage of the equation for invariant 
  - Use initialiser list or assignment inside parameterised constructor? To be more memory efficient, it is better to use initialisers where possible, since using assignment means the objects are initialised using default constructor first, and then the rvalues are assigned ("copied") to them. This costs an extra unecessary step.
 
 ### Minimising constructor / assignment operator calls
- - When performing the sum of the four momenta and the dot product, 2 copy constructors were called before the operation was performed. This is because the getters of the Particle and FourMomentum class were passed by value, which creates a deep copy as per the copy constructor. Both the sum and the four momenta (used in main) call .get_four_momentum() twice (one for both particles), hence calling copy constructor twice. This was resolved by passing all getters of both classes by reference. 
- - The sum of the four momenta calls the destructor as the + operator requires intialisation of a FourMomentum object on the return line which goes out of socpe when the function ends. The dot product does not require initialisation of a FourMomentum object as an object is passed into the DotProduct function, which is only destructed at the end of the program.
+ - When performing the sum of the four momenta and the dot product, 2 copy constructors were called before the operation was performed. This was because the getters of the Particle and FourMomentum class were passed by value, which created a deep copy as per the copy constructor. Both the sum and the four momenta (used in main) call get_four_momentum() twice (one for both particles), hence the copy constructor was called twice. This was resolved by passing all getters of both classes by reference. 
+ - The sum of the four momenta calls the destructor, since the `+` operator requires intialisation of a FourMomentum object on the return line which goes out of socpe when the function ends. The dot product does not require initialisation of a FourMomentum object as an object is passed into the DotProduct function, which is only destructed at the end of the program.
  - The copy assignment operator used in main (used to copy the first electron to a new electron) called the copy constructor first unecessarily. This occured because using the asisgnment operator required initialisation of a new electron via the Particle class parameterised constructor, which uses `set_four_momentum` to initialise the FourMomentum object as the user inputted FourMomentum object. This uses copy assignment operator, hence this line can be seen. However, an unecessary copy constructor was used because the `set_four_momentum` passed the user input by value. This was resolved by instead passing by reference.
 
 ### Move & copy semantics in Particle class
@@ -89,13 +105,15 @@ The program could be improved by taking advantage of the equation for invariant 
 ### Using implementation files
  - All constructors (default, parameterised, copy, move), assignment operators (copy, move), and setters and getters have been specified in the implementation file unless they are trivial (fit in one line, with no sub-scopes).
 
-
 ### Object input validation
  - Unlike assignment 3, it is not purposeful to use a validation file to check particles for their properties. Firstly, the energy and momentum of the particle is not a set value for a given particle, and there could many instances of the same particle with different energy or momenta. Secondly, there are only 17+1 particles in the Standard Model, and so only 18 possible names that should be allowed for the particles. Implementing these in a validation file would allow the user to edit them more easily, and also potentially break the program if the format was changed.
  - The valid particle names are therefore managed as a private static method in the Particle class, disallowing any setters or getters which could modify the list. This method checks if the inputted particle name is valid by comparing it to a valid particle name list. Static ensures that during run time the list inside the function cannot be modified - belongs to the class rather than any specific object of the class (so Particle cannot call it directly) This is also the reason static functions cannot also be const.
  - Use `std::unordered_set` to store the valid particles instead of `std::vector` as sets ensure the elements are unique, and unordered sets use average constant time O(1) for insert, search and delete operations (same as vectors).
  - Due to the requirement of pushing back the four-vector elements to the four momentum pointer in the parameterised constructor, it was not possible to use the energy setter within the parameterised constructor. This is because if the paramterised constructor is called before any other constructor, then the vector which `four_momentum_ptr` points to would be empty, while `set_E` requires the element to already exist (`(*four_momentum_ptr)[0]`). As a result, both the paramterised constructor and energy setter need to check the energy is not negative, hence the introduction of `validate_energy` private method in FourMomentum class (avoids repeating code for energy validation).
  - Originally had the Particle class default constructor set name to "unamed", but this was changed to "electron" so that it was a valid particle (as specified in unordered set of valid particles).
+
+### Getters and setters
+ - When trying `electron_test.get_four_momentum().set_px(10);`, there was an issue since `get_four_momentum()` in Particle class returns a reference to a const FourMomentum object, and so `set_px()` could not be called on it as it would be modifying the FourMomentum object.
 
 
 ## Disclosure of Delegation to Generative AI

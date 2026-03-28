@@ -56,6 +56,7 @@ public:
     //Getters
     const string& get_name() const {return name;}
     const FourMomentum& get_four_momentum() const {return momentum;}
+    FourMomentum& get_four_momentum() {return momentum;}
 
     //Prototyping friend functions
     friend std::ostream& operator<<(std::ostream& os, const Particle& p);
