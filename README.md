@@ -155,7 +155,7 @@ The author (Kuba Kane) declares the use of generative AI in the research and cod
 
 The GAI tool used for these tasks was: ChatGPT-5.2.
 
-The author declares that the work does not contain any AI-generated code. GAI was used as a source of information for explaining code only, and as an inspiration to write original code.
+The author declares that the work does not contain any AI-generated code or text. GAI was used as a source of information for explaining code only, and as an inspiration to write original code. 
 
 Responsibility for the final manuscript lies entirely with the author.
 
