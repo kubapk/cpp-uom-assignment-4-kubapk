@@ -66,8 +66,11 @@ int main()
         //Edit properties of const FourMomentum
         //fm1.set_E(10); //does not update const FourMomentum
 
+        //Create particle using default constructor
+        std::cout<<"\nCreating particle using default constructor"<<std::endl;
+        Particle p2;
+        std::cout<<p2<<std::endl;
 
-        
     }
     catch(const std::exception& e)
     {

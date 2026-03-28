@@ -19,6 +19,8 @@ This code was run on VSC using a Windows 11 device. The compilation line used wa
 ### Modifying the main file, `main.cpp`
 These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own). Intialising a particle is easiest via the parameterised constructor of the Particle and FourMomentum class, i.e. `Particle(<particle-name>, FourMomentum(<E>, <px>, <py>, <pz>))`, where E, px, py, pz are the energy and momenta in the x, y, z directions. Setters and getters can also be used (see section below). Enforced through setters and the parameterised constructor, E, px, py, pz must all be doubles, and E cannot be negative.
 
+If the default constructor is used, the particle will be assumed to be an electron, with E=px=py=pz=0.
+
 The particle name must be in the list of valid names (containted within a private member function in the Particle class). The valid particles are given below. Note that these are case-sensitive and must be entered exactly as seen below.
 
 ```
@@ -61,6 +63,8 @@ electron_test.set_four_momentum(FourMomentum(0, 1, 1, 1));
 You can also set Particle or FourMomenta objects to be const.
 
 To see more use cases of setters and getters from these classes, see the file `test.cpp`. You can compile this using the compilation line `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o test.exe -Wall`, and then running the file `test.exe`.
+
+Note that if user inputs are accepted from the terminal, you would need to perform validation checks so that the type is as required for the Particle and FourMomentum classes.
 
 
 ## Physics Behind the Program
@@ -116,6 +120,7 @@ A different approach could be to just check the invariant mass is positive, stil
  - Due to the requirement of pushing back the four-vector elements to the four momentum pointer in the parameterised constructor, it was not possible to use the energy setter within the parameterised constructor. This is because if the paramterised constructor is called before any other constructor, then the vector which `four_momentum_ptr` points to would be empty, while `set_E` requires the element to already exist (`(*four_momentum_ptr)[0]`). As a result, both the paramterised constructor and energy setter need to check the energy is not negative, hence the introduction of `validate_energy` private method in FourMomentum class (avoids repeating code for energy validation).
  - Originally had the Particle class default constructor set name to "unamed", but this was changed to "electron" so that it was a valid particle (as specified in unordered set of valid particles).
  - No additional checks for energy or particle name are required in assignment operators or copy constructors, because the two objects in question which undergo copy or move semantics must both be Particle or FourMomentum objects, which via default or parameterised constructors fulfill the requirements.
+ - There is no need for checks that the inputs for name are string and for E, px, py, pz are doubles, since there is no user input from the terminal, and so any incorrect formats will cause the compiler to call an error.
 
 ### Getters and setters
  - When trying `electron_test.get_four_momentum().set_px(10);`, there was an issue since `get_four_momentum()` in Particle class returns a reference to a const FourMomentum object, and so `set_px()` could not be called on it as it would be modifying the FourMomentum object. To resolve this issue, a function with the same name was introduced which returns a reference to a non-const FourMomentum. In the case that a user wants to set a particle to be const (e.g. they don't want to accidentily modify it in their main function), the original `get_four_momentum()` function (returning const) was kept so that the user could still get the four momentum of a const particle.
