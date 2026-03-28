@@ -53,7 +53,7 @@ Particle electron_test{Particle("electron", FourMomentum(10, 2, 3, 1))};
 electron_test.get_four_momentum().set_px(5);
 ```
 
-The expection is that you can modify the whole FourMomentum object using `set_four_momentum` from the Particle class, but this requires a FourMomentum object to be passed, which needs to be initialised or used from a previous initialisation:
+The exception is that you can modify the whole FourMomentum object using `set_four_momentum` from the Particle class, but this requires a FourMomentum object to be passed, which needs to be initialised or used from a previous initialisation:
 ```
 electron_test.set_four_momentum(FourMomentum(0, 1, 1, 1));
 ```
