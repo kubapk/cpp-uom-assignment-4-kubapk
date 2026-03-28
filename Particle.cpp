@@ -29,7 +29,7 @@ Particle::Particle(const string& name_in, const FourMomentum& momentum_in)
 //Setter for particle name
 void Particle::set_name(const string& name_in)
 {
-    name = is_valid_name(name_in);
+    name = validate_name(name_in);
 }
 
 
@@ -40,7 +40,7 @@ void Particle::set_four_momentum(const FourMomentum& momentum_in)
 
 //MEMBER FUNCTIONS
 //Private member function to check for valid particle names
-string Particle::is_valid_name(const string& name_in)
+string Particle::validate_name(const string& name_in)
 {
     static const std::unordered_set<string> valid_names = {
         "electron", "muon", "tau", "electron neutrino", "muon neutrino",

@@ -28,7 +28,7 @@ private:
     //ptr to a vector of four "0.0" doubles)
 
     //Private member function to check if name is valid
-    static string is_valid_name(const string& name_in);
+    static string validate_name(const string& name_in);
 
 public:
     //Default constructor

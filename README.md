@@ -7,7 +7,9 @@
 >
 > The following classes are defined in this program:
 > - **FourMomentum:** Contains a unique smart pointer to a vector of 4 doubles, whose elements correspond to the energy, x momentum, y momentum, and z momentum. These elements are set to 0 if FourMomentum objects are intialised via the default constructor, and can be set to any doubles (as long as energy is not negative) via the parameterised constructors or setters. Each element of the vector can be retrieved using getters. Given the vector is intialised via a smart pointer, copy and move constructors and assignment operators are defined, making use of the vector copy constructor and `std::move`. This class also contains a private member method `validate_energy` used to check energy is not negative.
-> - **Particle:** Contains a name (string) and FourMomentum object (from class above). The default constructor sets name to "electron" and uses default FourMomentum constructor to set energy and momentum values. The copy and move constructors and assignment operators are set to default, as string object will use the copy and move semantics required in this case, and the FourMomentum object will use the semantics defined in the FourMomentum class. The private member method `is_valid_name` returns the name as long as it is one of the 18 particles in the standard model.
+> - **Particle:** Contains a name (string) and FourMomentum object (from class above). The default constructor sets name to "electron" and uses default FourMomentum constructor to set energy and momentum values. The copy and move constructors and assignment operators are set to default, as string object will use the copy and move semantics required in this case, and the FourMomentum object will use the semantics defined in the FourMomentum class. The private member method `validate_name` returns the name as long as it is one of the 18 particles in the standard model.
+>
+> Both classes have friend functions which overload the `<<` operator to enable a Particle or FourMomentum object to be printed using `std::cout`.
 
 
 ## User Guidelines
@@ -15,9 +17,9 @@
 This code was run on VSC using a Windows 11 device. The compilation line used was `g++ -std=c++17 main.cpp Particle.cpp FourMomentum.cpp -o main.exe -Wall`. The program can then be run by calling the file `main.exe`.
 
 ### Modifying the main file, `main.cpp`
-These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own). To initialise a particle, you can do see via the parameterised constructor of the Particle class, `Particle(<particle-name>, FourMomentum(<E>, <px>, <py>, <pz>))`, where
+These guidelines are for a user who wishes to use the classes in this program, but modify the main file provided (or make their own). Intialising a particle is easiest via the parameterised constructor of the Particle and FourMomentum class, i.e. `Particle(<particle-name>, FourMomentum(<E>, <px>, <py>, <pz>))`, where E, px, py, pz are the energy and momenta in the x, y, z directions.
 
-If you wish to specify your own particle name, it must be in the list of valid names (containted within a private member function in the Particle class). The valid particles are given below. Note that these are case-sensitive and must be entered exactly as seen.
+The particle name must be in the list of valid names (containted within a private member function in the Particle class). The valid particles are given below. Note that these are case-sensitive and must be entered exactly as seen below.
 
 ```
 electron
@@ -40,15 +42,17 @@ Z boson
 Higgs bosson
 ```
 
-If you wish to make changes how four momenta works,...
+You can check if the move semantics work by uncommenting the lines which print First muon and First electron (sections 5 and 6 in `main.cpp`). Doing so will return an error, given that it cannot print out the Particle object which has been moved from, as its pointer would have become null. This is handled by the smart pointer.
 
-You can check if the move semantics work by uncommenting the lines which print First muon and First electron (sections 5 and 6 in `main.cpp`), and you will receive a compiler error, given that it cannot print out the Particle object given its pointer is null (handled by smart unique pointer).
+Within the main file, FourMomentum can be adjusted using setters after it is declared. If you wish to make changes to how four momenta works, any changes should be made within the FourMomentum class (and not in the main file) to adhere to encapsulation. An example idea of how FourMomentum could be changed is provided in the *Physics Behind the Program* section, modifying the constructors and getters/setters to disallow an energy input. Despite this, there is no instance when the non-negativity constraint on the energy should be removed.
 
 
 ## Physics Behind the Program
-//
+### Conventions used in the program
+Each particle is described by a four vector, following the convention for four momentum in natural units (c=1), and enforcing the constraint that the energy should not be 0. The units of all components are MeV. To perform the dot product, the Minkowski metric is used with the (+, -, -, -) convention, such that $p \cdot q = E_p E_q - p_x q_x - p_y q_y - p_z q_z$.
 
-The program could be improved by taking advantage of the equation $m^2 = E^2 - p^2$. Since all 18 particles in the standard model have a defined mass, a `std::map` could contain each particle name as the key and its mass as the value. When in the main file a Particle is initialised with a given name, this could be mapped to find the corresponding mass. As a result, the FourMomentum constructors would only require the 3 momenta inputs, and could push back the energy to the four momentum vector using the aforementioned equation. This would make the program more accurate in terms of the physics, as otherwise the user could enter E and p which breaks the equation. Other possible improvements include checking that E>p!!!
+### Making the program more physically accurate
+The program could be improved by taking advantage of the equation $m^2 = E^2 - p^2$. Since all 18 particles in the standard model have a defined mass, a `std::map` could contain each particle name as the key and its mass as the value. When in the main file a Particle is initialised with a given name, this could be mapped to find the corresponding mass. As a result, the FourMomentum constructors would only require the 3 momenta inputs, and could push back the energy to the four momentum vector using the aforementioned equation. This would make the program more accurate in terms of the physics, as otherwise the user could enter E and p which breaks the equation. 
 
 
 ## Program Design & Reasoning
