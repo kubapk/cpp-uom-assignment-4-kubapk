@@ -13,6 +13,7 @@ Created on Wed 25 Mar 2026
 
 #include<iostream>
 #include<vector>
+#include <stdexcept>
 #include "Particle.h"
 #include "FourMomentum.h"
 using std::vector;

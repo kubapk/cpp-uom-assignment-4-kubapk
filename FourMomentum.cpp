@@ -12,6 +12,7 @@ Created on Tue 24 Mar 2026
 */
 
 #include<iostream>
+#include <stdexcept>
 #include "FourMomentum.h"
 
 
@@ -112,8 +113,8 @@ void FourMomentum::set_E(const double energy_in)
 
 //Setters for px, py, pz
 void FourMomentum::set_px(const double x_momentum_in) {(*four_momentum_ptr)[1] = x_momentum_in;}
-void FourMomentum::set_py(const double z_momentum_in) {(*four_momentum_ptr)[2] = z_momentum_in;}
-void FourMomentum::set_pz(const double y_momentum_in) {(*four_momentum_ptr)[3] = y_momentum_in;}
+void FourMomentum::set_py(const double y_momentum_in) {(*four_momentum_ptr)[2] = y_momentum_in;}
+void FourMomentum::set_pz(const double z_momentum_in) {(*four_momentum_ptr)[3] = z_momentum_in;}
 
 
 //MEMBER FUNCTIONS
@@ -152,7 +153,7 @@ void FourMomentum::validate_energy(const double E)
 //Friend function to print FourMomentum
 std::ostream &operator<<(std::ostream &os, const FourMomentum &fm)
 {
-    os << "[E = "<<fm.get_E()<<"MeV, px = "<<fm.get_px()<<"MeV, py = "<<fm.get_py()<<"MeV, pz = "<<fm.get_pz()<<"Mev]";
+    os << "[E = "<<fm.get_E()<<"MeV, px = "<<fm.get_px()<<"MeV, py = "<<fm.get_py()<<"MeV, pz = "<<fm.get_pz()<<"MeV]";
 
     return os;
 }

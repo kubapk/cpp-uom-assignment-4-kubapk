@@ -36,8 +36,8 @@ strange
 bottom
 photon 
 gluon
-positive W boson
-negative W boson
+W+ boson
+W- boson
 Z boson
 Higgs bosson
 ```
@@ -63,7 +63,7 @@ The program could be improved by taking advantage of the equation for invariant 
    - Option 1: Implement FourMomentum class with members E, px, py, pz and then initialise a vector (with dynamically allocated memory) in
    the Particle class, which copies each member of FourMomentum using the getters inside the FourMomentum class and pushes them to the vector.
    - Option 2: Implement FourMomentum object as a vector storing E, px, py, pz, and keep this format 
- - Option 2 is better as option 1 forces a deep copy to be made of the members of the FourMomentum class, and can tberefore lead to issues since there are 2 copies of the data, e.g. if x momentum is updated in FourMomentum class, it does not update the x momentum for the corresponding particle class.
+ - Option 2 is better as option 1 forces a deep copy to be made of the members of the FourMomentum class, and can therefore lead to issues since there are 2 copies of the data, e.g. if x momentum is updated in FourMomentum class, it does not update the x momentum for the corresponding particle class.
 
 ### Passing by reference or by value
  - Passed by reference in constructor of Particle class as it takes in FourMomentum object which need not be copied, while passed by value in constructor of FourMomentum class as it takes in doubles which are not expensive to copy. CHECK THIS
@@ -83,7 +83,7 @@ The program could be improved by taking advantage of the equation for invariant 
  - The sum of the four momenta calls the destructor as the + operator requires intialisation of a FourMomentum object on the return line which goes out of socpe when the function ends. The dot product does not require initialisation of a FourMomentum object as an object is passed into the DotProduct function, which is only destructed at the end of the program.
  - The copy assignment operator used in main (used to copy the first electron to a new electron) called the copy constructor first unecessarily. This occured because using the asisgnment operator required initialisation of a new electron via the Particle class parameterised constructor, which uses `set_four_momentum` to initialise the FourMomentum object as the user inputted FourMomentum object. This uses copy assignment operator, hence this line can be seen. However, an unecessary copy constructor was used because the `set_four_momentum` passed the user input by value. This was resolved by instead passing by reference.
 
-### Constructors / assignment operators
+### Move & copy semantics in Particle class
  - The Particle class is set to use the default constructors and assignment operators for both copy and move operations, since the Particle class contains only string (`name`) and FourMomentum (`momentum`) objects. The string will use deep copy by default, and the FourMomentum object will use the constructors / assignment operators defined in the FourMomentum class.
 
 ### Using implementation files
@@ -92,7 +92,7 @@ The program could be improved by taking advantage of the equation for invariant 
 
 ### Object input validation
  - Unlike assignment 3, it is not purposeful to use a validation file to check particles for their properties. Firstly, the energy and momentum of the particle is not a set value for a given particle, and there could many instances of the same particle with different energy or momenta. Secondly, there are only 17+1 particles in the Standard Model, and so only 18 possible names that should be allowed for the particles. Implementing these in a validation file would allow the user to edit them more easily, and also potentially break the program if the format was changed.
- - The valid particle names are therefore managed as a private static method in the Particle class, disallowing any setters or getters which could modify the list. This method checks if the inputted particle name is valid by comparing it to a valid particle name list. Static ensures that during run time the list inside the function cannot be modified - belongs to the class rather than any specific object of the class (so Particle cannot call it directly).
+ - The valid particle names are therefore managed as a private static method in the Particle class, disallowing any setters or getters which could modify the list. This method checks if the inputted particle name is valid by comparing it to a valid particle name list. Static ensures that during run time the list inside the function cannot be modified - belongs to the class rather than any specific object of the class (so Particle cannot call it directly) This is also the reason static functions cannot also be const.
  - Use `std::unordered_set` to store the valid particles instead of `std::vector` as sets ensure the elements are unique, and unordered sets use average constant time O(1) for insert, search and delete operations (same as vectors).
  - Due to the requirement of pushing back the four-vector elements to the four momentum pointer in the parameterised constructor, it was not possible to use the energy setter within the parameterised constructor. This is because if the paramterised constructor is called before any other constructor, then the vector which `four_momentum_ptr` points to would be empty, while `set_E` requires the element to already exist (`(*four_momentum_ptr)[0]`). As a result, both the paramterised constructor and energy setter need to check the energy is not negative, hence the introduction of `validate_energy` private method in FourMomentum class (avoids repeating code for energy validation).
  - Originally had the Particle class default constructor set name to "unamed", but this was changed to "electron" so that it was a valid particle (as specified in unordered set of valid particles).
